@@ -55,7 +55,7 @@ func NewConnection(server, user, pass, level string) (*Connection, error) {
 	c.log.SetLevel(levelVal)
 	c.url, c.err = url.Parse(server)
 
-	return &Connection, nil
+	return &c, nil
 }
 
 // getToken does some cool stuff
