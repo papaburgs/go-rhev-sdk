@@ -11,6 +11,7 @@ import (
 	"github.com/Sirupsen/logrus"
 )
 
+// Connection represents the connection to a RHEV engine
 type Connection struct {
 	url      *url.URL
 	server   string
@@ -33,6 +34,7 @@ type Connection struct {
 	log          *logrus.Logger
 }
 
+// NewConnection will create a new connection object and setup logging
 func NewConnection(server, user, pass, level string) (*Connection, error) {
 	var (
 		levelVal logrus.Level
