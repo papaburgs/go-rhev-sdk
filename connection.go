@@ -3,6 +3,7 @@
 package rhvlib
 
 import (
+	"crypto/tls"
 	"errors"
 	"net/http"
 	"net/url"
@@ -11,16 +12,17 @@ import (
 	"github.com/Sirupsen/logrus"
 )
 
+// Connection represents the connection to a RHEV engine
 type Connection struct {
-	url      *url.URL
-	server   string
-	username string
-	password string
-	token    string
-	insecure bool
-	caFile   string
+	url        *url.URL
+	server     string
+	username   string
+	password   string
+	token      string
+	insecure   bool
+	caFile     string
 	caContents []byte
-	headers  map[string]string
+	headers    map[string]string
 
 	kerberos bool
 	timeout  time.Duration
@@ -34,6 +36,7 @@ type Connection struct {
 	log          *logrus.Logger
 }
 
+// NewConnection will create a new connection object and setup logging
 func NewConnection(server, user, pass, level string) (*Connection, error) {
 	var (
 		levelVal logrus.Level
@@ -60,7 +63,7 @@ func NewConnection(server, user, pass, level string) (*Connection, error) {
 	} else {
 		c.url, c.err = url.Parse(server)
 	}
-	c.insecture = false
+	c.insecure = false
 
 	return &c, c.err
 }
@@ -75,43 +78,45 @@ func (c *Connection) Connect() error {
 	if c.err != nil {
 		return c.err
 	}
-	validateOptions()
-	loadCACert()
-	getToken()
-	build()
+	c.validateOptions()
+	c.loadCACert()
+	c.getToken()
+	//c.build()
+	return nil
 }
 
 // validateOptions makes sure we have some decent values to work with
 // basically, no empty servers or credentials
-func (c *Conection) validateOptions() {
+func (c *Connection) validateOptions() {
 	// if there is an error already, just return
 	if c.err != nil {
 		return
 	}
-	if len(c.user) == 0 {
+	if len(c.username) == 0 {
 		c.err = errors.New("Username cannot be empty")
 	}
-	if len(c.pass) == 0 {
+	if len(c.password) == 0 {
 		c.err = errors.New("Password cannot be empty")
 	}
 }
 
-func (c *Conection) loadCACert() {
+func (c *Connection) loadCACert() {
 	var tlsConfig *tls.Config
 	// if there is an error already, just return
 	if c.err != nil {
 		return
 	}
 	if c.insecure {
-		tlsConfig = &tls.Config {
-			InsecureSkipVerify : true
+		tlsConfig = &tls.Config{
+			InsecureSkipVerify: true,
 		}
 		return
 	}
-	tlsConfig = &tls.Config {
-		InsecureSkipVerify : false
+	tlsConfig = &tls.Config{
+		InsecureSkipVerify: false,
 	}
 }
+
 ///TODO, working here!!!
 // getToken does some cool stuff
 func (c *Connection) getToken() {
