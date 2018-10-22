@@ -4,12 +4,12 @@ package rhvlib
 
 import (
 	"crypto/tls"
+	"crypto/x509"
 	"errors"
+	"fmt"
 	"net/http"
 	"net/url"
 	"time"
-
-	"github.com/Sirupsen/logrus"
 )
 
 // Connection represents the connection to a RHEV engine
@@ -24,9 +24,9 @@ type Connection struct {
 	caContents []byte
 	headers    map[string]string
 
-//	kerberos bool
-//	timeout  time.Duration
-//	compress bool
+	//	kerberos bool
+	//	timeout  time.Duration
+	//	compress bool
 	// http client
 	client *http.Client
 	// SSO attributes
@@ -35,11 +35,10 @@ type Connection struct {
 	err          error
 }
 
-
 // NewConnection will create a new connection object and setup logging
 func NewConnection(server, user, pass, level string) (*Connection, error) {
 	var (
-		err      error
+		err error
 	)
 
 	c := Connection{
@@ -55,6 +54,7 @@ func NewConnection(server, user, pass, level string) (*Connection, error) {
 		c.url, c.err = url.Parse(server)
 	}
 	c.insecure = false
+	c.ssoTokenName = "access_token"
 
 	return &c, c.err
 }
@@ -106,7 +106,7 @@ func (c *Connection) loadCACert() {
 	tlsConfig = &tls.Config{
 		InsecureSkipVerify: false,
 	}
-    // if we have contents, we will asuming this doesn't need to be done
+	// if we have contents, we will asuming this doesn't need to be done
 	if len(caContents) > 0 {
 		return
 	}
@@ -128,10 +128,32 @@ func (c *Connection) SetCAFilePath(path string) {
 // SetCAFileContents sets the content of a ca cert
 // Either this function or the SetCAFilePath need to be called
 // when using a cert
-func (c *Connection)SetCAFileContents(content []byte) {
+func (c *Connection) SetCAFileContents(content []byte) {
 	c.caContents = content
 }
+
 // getToken does some cool stuff
 func (c *Connection) getToken() {
-	// TODO work here next, full from line 526 of go-ovirt
+	var tlsConfig *tls.Config
+	loadCACert()
+	if c.err != nil {
+		return
+	}
+
+	if c.url.Scheme == "https" {
+		pool := x509.NewCertPool()
+		if !pool.AppendCertsFromPEM(caCerts) {
+			return nil, fmt.Errorf("Failed to parse CA Certificate in file '%s'", connBuilder.conn.caFile)
+		}
+		tlsConfig.RootCAs = pool
+	}
+	c.client = &http.Client{
+		Timeout: time.Duration{time.Second * 30},
+		Transport: &http.Transport{
+			// Close the http connection after calling resp.Body.Close()
+			DisableKeepAlives: true,
+			TLSClientConfig:   tlsConfig,
+		},
+	}
+	return
 }
