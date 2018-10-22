@@ -24,22 +24,21 @@ type Connection struct {
 	caContents []byte
 	headers    map[string]string
 
-	kerberos bool
-	timeout  time.Duration
-	compress bool
+//	kerberos bool
+//	timeout  time.Duration
+//	compress bool
 	// http client
 	client *http.Client
 	// SSO attributes
 	ssoToken     string
 	ssoTokenName string
 	err          error
-	log          *logrus.Logger
 }
+
 
 // NewConnection will create a new connection object and setup logging
 func NewConnection(server, user, pass, level string) (*Connection, error) {
 	var (
-		levelVal logrus.Level
 		err      error
 	)
 
@@ -49,14 +48,6 @@ func NewConnection(server, user, pass, level string) (*Connection, error) {
 		password: pass,
 		server:   server,
 	}
-	c.log = logrus.New()
-	levelVal, err = logrus.ParseLevel(level)
-	if err != nil {
-		c.log.SetLevel(logrus.InfoLevel)
-		c.log.Warn("bad level passed in, default to Info level but continuing")
-	}
-
-	c.log.SetLevel(levelVal)
 
 	if c.server == "" {
 		c.err = errors.New("server cannot be empty")
@@ -115,9 +106,32 @@ func (c *Connection) loadCACert() {
 	tlsConfig = &tls.Config{
 		InsecureSkipVerify: false,
 	}
+    // if we have contents, we will asuming this doesn't need to be done
+	if len(caContents) > 0 {
+		return
+	}
+
+	if c.caFile == "" {
+		c.err = errors.New("caFile is required")
+		return
+	}
+	c.caContents, c.err = ioutils.ReadFile(c.caFile)
 }
 
-///TODO, working here!!!
+// SetCAFilePath set the path for the CA cert file
+// This function or the SetCAFileContents needs to be run to set
+// Cert details
+func (c *Connection) SetCAFilePath(path string) {
+	c.caFile = path
+}
+
+// SetCAFileContents sets the content of a ca cert
+// Either this function or the SetCAFilePath need to be called
+// when using a cert
+func (c *Connection)SetCAFileContents(content []byte) {
+	c.caContents = content
+}
 // getToken does some cool stuff
 func (c *Connection) getToken() {
+	// TODO work here next, full from line 526 of go-ovirt
 }
