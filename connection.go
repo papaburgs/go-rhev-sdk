@@ -1,16 +1,29 @@
 // Package rhvlib will handle all of the details around the interactions
 // with the RHEV managers
-package rhvlib
+package rhvSDK
 
 import (
 	"crypto/tls"
 	"crypto/x509"
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 )
+
+type ssoResponseJSON struct {
+	AccessToken string `json:"access_token"`
+	// do not know if these exist in RHEV
+	//	SsoError     string `json:"error"`
+	//	SsoErrorCode string `json:"error_code"`
+	Scope     string `json:"scope"`
+	Expire    string `json:"exp"`
+	TokenType string `json:"token_type"`
+}
 
 // Connection represents the connection to a RHEV engine
 type Connection struct {
@@ -36,10 +49,7 @@ type Connection struct {
 }
 
 // NewConnection will create a new connection object and setup logging
-func NewConnection(server, user, pass, level string) (*Connection, error) {
-	var (
-		err error
-	)
+func NewConnection(server, user, pass string) (*Connection, error) {
 
 	c := Connection{
 		err:      nil,
@@ -71,9 +81,9 @@ func (c *Connection) Connect() error {
 	}
 	c.validateOptions()
 	c.loadCACert()
+	c.buildClient()
 	c.getToken()
-	//c.build()
-	return nil
+	return c.err
 }
 
 // validateOptions makes sure we have some decent values to work with
@@ -92,22 +102,12 @@ func (c *Connection) validateOptions() {
 }
 
 func (c *Connection) loadCACert() {
-	var tlsConfig *tls.Config
 	// if there is an error already, just return
 	if c.err != nil {
 		return
 	}
-	if c.insecure {
-		tlsConfig = &tls.Config{
-			InsecureSkipVerify: true,
-		}
-		return
-	}
-	tlsConfig = &tls.Config{
-		InsecureSkipVerify: false,
-	}
 	// if we have contents, we will asuming this doesn't need to be done
-	if len(caContents) > 0 {
+	if len(c.caContents) > 0 {
 		return
 	}
 
@@ -115,7 +115,7 @@ func (c *Connection) loadCACert() {
 		c.err = errors.New("caFile is required")
 		return
 	}
-	c.caContents, c.err = ioutils.ReadFile(c.caFile)
+	c.caContents, c.err = ioutil.ReadFile(c.caFile)
 }
 
 // SetCAFilePath set the path for the CA cert file
@@ -132,23 +132,26 @@ func (c *Connection) SetCAFileContents(content []byte) {
 	c.caContents = content
 }
 
-// getToken does some cool stuff
-func (c *Connection) getToken() {
+// buildClient creates the client
+func (c *Connection) buildClient() {
 	var tlsConfig *tls.Config
-	loadCACert()
+	c.loadCACert()
 	if c.err != nil {
 		return
 	}
 
+	tlsConfig = &tls.Config{
+		InsecureSkipVerify: c.insecure,
+	}
 	if c.url.Scheme == "https" {
 		pool := x509.NewCertPool()
-		if !pool.AppendCertsFromPEM(caCerts) {
-			return nil, fmt.Errorf("Failed to parse CA Certificate in file '%s'", connBuilder.conn.caFile)
+		if !pool.AppendCertsFromPEM(c.caContents) {
+			c.err = errors.New("Failed to parse CA Certificate in contents")
 		}
 		tlsConfig.RootCAs = pool
 	}
 	c.client = &http.Client{
-		Timeout: time.Duration{time.Second * 30},
+		Timeout: time.Duration(time.Second * 30),
 		Transport: &http.Transport{
 			// Close the http connection after calling resp.Body.Close()
 			DisableKeepAlives: true,
@@ -156,4 +159,86 @@ func (c *Connection) getToken() {
 		},
 	}
 	return
+}
+
+func (c *Connection) getToken() {
+	var ssoResp *ssoResponseJSON
+	if c.err != nil {
+		return
+	}
+	if c.ssoToken != "" {
+		// assume we have a token we are ok
+		fmt.Println("have token")
+		return
+	}
+
+	// Build the URL and parameters required for the request:
+	parameters := c.buildSsoAuthRequest()
+	// Send the response and wait for the request:
+	ssoResp, c.err = c.getSsoResponse(parameters)
+	if c.err != nil {
+		return
+	}
+	c.ssoToken = ssoResp.AccessToken
+}
+
+func (c *Connection) buildSsoAuthRequest() map[string]string {
+	// Compute the entry point and the parameters:
+	parameters := map[string]string{
+		"scope":      "ovirt-app-api",
+		"grant_type": "password",
+		"username":   c.username,
+		"password":   c.password,
+	}
+
+	// Compute the URL:
+	c.url.Path = fmt.Sprintf("/ovirt-engine/sso/oauth/token")
+
+	// Return the URL and the parameters:
+	return parameters
+}
+
+func (c *Connection) getSsoResponse(parameters map[string]string) (*ssoResponseJSON, error) {
+	var err error
+	// POST request body:
+	formValues := make(url.Values)
+	for k1, v1 := range parameters {
+		formValues[k1] = []string{v1}
+	}
+	// Build the net/http request:
+	req, err := http.NewRequest("POST",
+		c.url.String(),
+		strings.NewReader(formValues.Encode()),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	// Add request headers:
+	req.Header.Add("User-Agent", "GoSDK/1")
+	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
+	req.Header.Add("Accept", "application/json")
+
+	// Send the request and wait for the response:
+	resp, err := c.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	// Parse and return the JSON response:
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+	var jsonObj ssoResponseJSON
+	err = json.Unmarshal(body, &jsonObj)
+	if err != nil {
+		return nil, fmt.Errorf("Failed to parse non-array sso with response %v", string(body))
+	}
+	// Unmarshal successfully
+	if jsonObj.AccessToken == "" {
+		return nil, fmt.Errorf("Did not get a token. Response: %s", string(body))
+	}
+	return &jsonObj, nil
 }
