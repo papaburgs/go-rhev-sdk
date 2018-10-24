@@ -3,6 +3,11 @@ This is a project to wrap the rhev api to make it easier to do basic task/report
 
 Note, this is not working at the moment and is being actively developed.
 
+## Status
+Can make a connection and get a token
+
+Currently working on getting a list of vms 
+
 ## Goals
 Intend this to be more than a simple wrapper, but instead a collection of functions
 that will be used to drive reports.  For instants, instead of just a function to get 
