@@ -30,3 +30,11 @@ This will be modeled closely to the api's return values
 
 ### Usage
 can clone this down in the normal go src directory using `go get`.
+
+#### example
+```go
+cert := []byte("<cert text>")
+api_url := "https://hostname"
+user := "my-username"
+pass := "my password"
+```
