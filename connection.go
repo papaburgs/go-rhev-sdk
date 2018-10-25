@@ -1,4 +1,4 @@
-// Package rhvlib will handle all of the details around the interactions
+// Package rhvsdk will handle all of the details around the interactions
 // with the RHEV managers
 package rhvsdk
 
@@ -48,7 +48,7 @@ type Connection struct {
 	err          error
 }
 
-// NewConnection will create a new connection object and setup logging
+// NewConnection will create a new connection object
 func NewConnection(server, user, pass string) (*Connection, error) {
 
 	c := Connection{
@@ -241,4 +241,40 @@ func (c *Connection) getSsoResponse(parameters map[string]string) (*ssoResponseJ
 		return nil, fmt.Errorf("Did not get a token. Response: %s", string(body))
 	}
 	return &jsonObj, nil
+}
+
+// getResponseBody takes an API endpoint path and returns the body as a slice of bytes
+func (c *Connection) getResponseBody(path string) ([]byte, error) {
+	var err error
+
+	// Compute the URL:
+	c.url.Path = fmt.Sprintf(path)
+
+	// Build the net/http request:
+	req, err := http.NewRequest("GET",
+		c.url.String(),
+		nil,
+	)
+	if err != nil {
+		return nil, err
+	}
+	// Add request headers:
+	req.Header.Add("User-Agent", "GoSDK/1")
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Authorization", fmt.Sprintf("Bearer "+c.ssoToken))
+
+	// Send the request and wait for the response:
+	resp, err := c.client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	// Parse and return the JSON response:
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	return body, err
 }
