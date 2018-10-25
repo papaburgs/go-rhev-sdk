@@ -1,4 +1,4 @@
-package rhvSDK
+package rhvsdk
 
 // VMs from section 5.238
 type VMs struct {

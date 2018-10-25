@@ -1,4 +1,4 @@
-package rhvSDK
+package rhvsdk
 
 import "time"
 
