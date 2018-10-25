@@ -2,34 +2,193 @@ package main
 
 import (
 	"fmt"
-	"strings"
+	"os"
+	"regexp"
 
-	"github.com/davecgh/go-spew/spew"
+	"github.com/Sirupsen/logrus"
+
 	"golang.org/x/net/html"
+	"golang.org/x/net/html/atom"
 )
 
-func main() {
-	z := html.NewTokenizer(strings.NewReader(cpu_table))
-	// if err != nil {
-	// 	fmt.Println(err)
-	// 	return
-	// }
-	i := 0
+type dataAttributes struct {
+	name    string
+	section string
+	attrs   []attribute
+}
+
+type attribute struct {
+	jsonName string
+	attType  string
+	goName   string
+}
+
+var (
+	ErrEOF = errors.New("EOF")
+	ErrNoName = errors.New("Could find name in expected location")
+)
+
+
+func TokenDetail(t html.Token, l *logrus.Logger) {
+	l.Debug("-- logging a token --")
+	l.Debug("found token string: ", t.String())
+	l.Debug("token attrs: ", t.Attr)
+	l.Debug("token Data: ", t.Data)
+	l.Debug("token Data Atom: ", t.DataAtom)
+	l.Debug("token Type: ", t.Type)
+}
+
+func findSectionTag(z *html.Tokenizer) error {
 	for {
 		tt := z.Next()
 		if tt == html.ErrorToken {
-			return
+			return ErrEOF
 		}
-		if 
-		fmt.Println("--------------")
-		fmt.Println(tt.String())
 		t := z.Token()
-		spew.Dump(t)
-		i++
+
+		// if not in a section already and we find a starting tag:
+		// we only care about a start section token
+			if t.Type == html.StartTagToken && t.DataAtom == atom.Section {
+					return 
+				
+		}
+	}
+}
+
+	
+// return is name, section, error
+func findNameInSection(z *html.Tokenizer) (string, string, error) {
+	for {
+		tt := z.Next()
+		if tt == html.ErrorToken {
+			return "", "", ErrEOF
+		}
+		t := z.Token()
+		if t.Type == html.StartTagToken && t.DataAtom == atom.H2 { 
+			// next token is the content we want
+			_ = z.Next()
+			t = z.Token()
+			if t.Type != html.TextToken {
+				return "", "", ErrNoName
+			}
+			// the token Data will have content like "6.233 Weight"
+			// want the number is one variable and the rest in another
+			match := re.FindStringSubmatch(t.Data)
+			if len(match) != 3 {
+				l.Error("match failed to find name and section in ", t.Data)
+				return "", "", ErrNoName
+			} else {
+				return match[2], match[1], nil
+			}
+		}
+	}
+}
+
+func findTableBody(z *html.Tokenizer) error {
+	for {
+		tt := z.Next()
+		if tt == html.ErrorToken {
+			return ErrEOF
+		}
+			if t.Type == html.StartTagToken && t.DataAtom == atom.Tbody {
+					return  nil
+				
+		}
 	}
 }
 
 
+
+func main() {
+	var (
+		inSection bool
+		inTable bool
+		inTableBody bool
+		da                 dataAttributes
+		das                []dataAttributes
+		err error
+	)
+	re := regexp.MustCompile(`(\d\.\d+)[\W]+(.*)\s*`)
+		// global logger
+	var l = logrus.New()
+	l.SetLevel(logrus.DebugLevel)
+
+	typeFile, err := os.Open("types.html")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	z := html.NewTokenizer(typeFile)
+	i := 0
+	das = []dataAttributes{}
+
+	// rewrite to make it like a state machine
+	
+	for {
+		das = []dataAttributes{}
+		if !findSectionTag(z) {
+			return
+		}
+		das.name, das.section, err = findNameInSection(z) 
+		if err != nil {
+			l.Error(err)
+			return
+		}
+		if err = findTableBody(z) ; err != nil {
+			l.Error("premature ending")
+			return
+		}
+		
+		
+		if inSection {
+			if t.Type == html.StartTagToken {
+				if t.DataAtom == atom.Table {
+					inTable = true
+					da.attrs = []attribute{}
+					continue // skip to next token
+				}
+				if t.DataAtom == atom.H2 { // next token is the content we want
+					_ = z.Next()
+					t = z.Token()
+					if t.Type != html.TextToken {
+						l.Error("Something went wrong, expecting text token")
+						break
+					}
+					// the token Data will have content like "6.233 Weight"
+					// want the number is one variable and the rest in another
+					match := re.FindStringSubmatch(t.Data)
+					if len(match) != 3 {
+						l.Error("match failed to find name and section in ", t.Data)
+					} else {
+						da.name = match[2]
+						da.section = match[1]
+					}
+					continue
+				}
+				// if not in table, move to the next token
+				if !inTable { continue } else {
+				    	
+
+				
+			}
+			if t.Type == html.EndTagToken {
+				// if the token is a section, them mark it we are in a section
+				// we don't need this token anymore
+				if t.DataAtom == atom.Section {
+					inSection = false
+					//append this section to the list
+					das = append(das, da)
+					continue
+				}
+				if t.DataAtom == atom.Table {
+					inTable = false
+					continue
+				}
+			}
+		}
+	}
+	fmt.Println(das, da)
+}
 
 var cpu_table = `<section class="section" id="types-cpu"><div class="titlepage"><div><div><h2 class="title">6.33.&nbsp;Cpu <span class="small small">struct</span></h2></div></div></div><div class="table" id="idm140613544648832"><p class="title"><strong>Table&nbsp;6.42.&nbsp;Attributes summary</strong></p><div class="table-contents"><table class="lt-4-cols lt-7-rows"><colgroup><col style="width: 20%; " class="col_1"><!--Empty--><col style="width: 20%; " class="col_2"><!--Empty--><col style="width: 60%; " class="col_3"><!--Empty--></colgroup><thead><tr><th style="text-align: left; vertical-align: top; ">Name</th><th style="text-align: left; vertical-align: top; ">Type</th><th style="text-align: left; vertical-align: top; ">Summary</th></tr></thead><tbody><tr><td style="text-align: left; vertical-align: top; "> <p>
 								<code class="literal">architecture</code>
