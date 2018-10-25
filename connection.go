@@ -1,6 +1,6 @@
 // Package rhvlib will handle all of the details around the interactions
 // with the RHEV managers
-package rhvSDK
+package rhvsdk
 
 import (
 	"crypto/tls"
