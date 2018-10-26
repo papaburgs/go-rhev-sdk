@@ -1,0 +1,3166 @@
+// type AccessProtocol from section 7.1 of the Redhat api guide
+type AccessProtocol struct {
+	Cifs    string `json:"cifs"`
+	Gluster string `json:"gluster"`
+	Nfs     string `json:"nfs"`
+}
+
+// type Action from section 7.2 of the Redhat api guide
+type Action struct {
+	AllowPartialImport             bool                                 `json:"allow_partial_import"`
+	Async                          bool                                 `json:"async"`
+	Attachment                     DiskAttachment                       `json:"attachment"`
+	AuthorizedKey                  AuthorizedKey                        `json:"authorized_key"`
+	Bricks                         []GlusterBrick                       `json:"bricks"`
+	Certificates                   []Certificate                        `json:"certificates"`
+	CheckConnectivity              bool                                 `json:"check_connectivity"`
+	Clone                          bool                                 `json:"clone"`
+	ClonePermissions               bool                                 `json:"clone_permissions"`
+	Cluster                        Cluster                              `json:"cluster"`
+	CollapseSnapshots              bool                                 `json:"collapse_snapshots"`
+	Comment                        string                               `json:"comment"`
+	Connection                     StorageConnection                    `json:"connection"`
+	ConnectivityTimeout            int                                  `json:"connectivity_timeout"`
+	DataCenter                     DataCenter                           `json:"data_center"`
+	DeployHostedEngine             bool                                 `json:"deploy_hosted_engine"`
+	Description                    string                               `json:"description"`
+	Details                        GlusterVolumeProfileDetails          `json:"details"`
+	Directory                      string                               `json:"directory"`
+	DiscardSnapshots               bool                                 `json:"discard_snapshots"`
+	DiscoveredTargets              []IscsiDetails                       `json:"discovered_targets"`
+	Disk                           Disk                                 `json:"disk"`
+	DiskProfile                    DiskProfile                          `json:"disk_profile"`
+	Disks                          []Disk                               `json:"disks"`
+	Exclusive                      bool                                 `json:"exclusive"`
+	Fault                          Fault                                `json:"fault"`
+	FenceType                      string                               `json:"fence_type"`
+	Filename                       string                               `json:"filename"`
+	Filter                         bool                                 `json:"filter"`
+	FixLayout                      bool                                 `json:"fix_layout"`
+	Force                          bool                                 `json:"force"`
+	GracePeriod                    GracePeriod                          `json:"grace_period"`
+	Host                           Host                                 `json:"host"`
+	Id                             string                               `json:"id"`
+	Image                          string                               `json:"image"`
+	ImageTransfer                  ImageTransfer                        `json:"image_transfer"`
+	ImportAsTemplate               bool                                 `json:"import_as_template"`
+	IsAttached                     bool                                 `json:"is_attached"`
+	Iscsi                          IscsiDetails                         `json:"iscsi"`
+	IscsiTargets                   []string                             `json:"iscsi_targets"`
+	Job                            Job                                  `json:"job"`
+	Lease                          StorageDomainLease                   `json:"lease"`
+	LogicalUnits                   []LogicalUnit                        `json:"logical_units"`
+	MaintenanceEnabled             bool                                 `json:"maintenance_enabled"`
+	ModifiedBonds                  []HostNic                            `json:"modified_bonds"`
+	ModifiedLabels                 []NetworkLabel                       `json:"modified_labels"`
+	ModifiedNetworkAttachments     []NetworkAttachment                  `json:"modified_network_attachments"`
+	Name                           string                               `json:"name"`
+	Option                         Option                               `json:"option"`
+	Pause                          bool                                 `json:"pause"`
+	Permission                     Permission                           `json:"permission"`
+	PowerManagement                PowerManagement                      `json:"power_management"`
+	ProxyTicket                    ProxyTicket                          `json:"proxy_ticket"`
+	Quota                          Quota                                `json:"quota"`
+	Reason                         string                               `json:"reason"`
+	ReassignBadMacs                bool                                 `json:"reassign_bad_macs"`
+	Reboot                         bool                                 `json:"reboot"`
+	RegistrationConfiguration      RegistrationConfiguration            `json:"registration_configuration"`
+	RemoteViewerConnectionFile     string                               `json:"remote_viewer_connection_file"`
+	RemovedBonds                   []HostNic                            `json:"removed_bonds"`
+	RemovedLabels                  []NetworkLabel                       `json:"removed_labels"`
+	RemovedNetworkAttachments      []NetworkAttachment                  `json:"removed_network_attachments"`
+	ResolutionType                 string                               `json:"resolution_type"`
+	RestoreMemory                  bool                                 `json:"restore_memory"`
+	RootPassword                   string                               `json:"root_password"`
+	Seal                           bool                                 `json:"seal"`
+	Snapshot                       Snapshot                             `json:"snapshot"`
+	Ssh                            Ssh                                  `json:"ssh"`
+	Status                         string                               `json:"status"`
+	StopGlusterService             bool                                 `json:"stop_gluster_service"`
+	StorageDomain                  StorageDomain                        `json:"storage_domain"`
+	StorageDomains                 []StorageDomain                      `json:"storage_domains"`
+	Succeeded                      bool                                 `json:"succeeded"`
+	SynchronizedNetworkAttachments []NetworkAttachment                  `json:"synchronized_network_attachments"`
+	Template                       Template                             `json:"template"`
+	Ticket                         Ticket                               `json:"ticket"`
+	UndeployHostedEngine           bool                                 `json:"undeploy_hosted_engine"`
+	UseCloudInit                   bool                                 `json:"use_cloud_init"`
+	UseSysprep                     bool                                 `json:"use_sysprep"`
+	VirtualFunctionsConfiguration  HostNicVirtualFunctionsConfiguration `json:"virtual_functions_configuration"`
+	Vm                             Vm                                   `json:"vm"`
+	VnicProfileMappings            []VnicProfileMapping                 `json:"vnic_profile_mappings"`
+	Volatile                       bool                                 `json:"volatile"`
+}
+
+// type AffinityGroup from section 7.3 of the Redhat api guide
+type AffinityGroup struct {
+	Comment     string       `json:"comment"`
+	Description string       `json:"description"`
+	Enforcing   bool         `json:"enforcing"`
+	HostsRule   AffinityRule `json:"hosts_rule"`
+	Id          string       `json:"id"`
+	Name        string       `json:"name"`
+	Positive    bool         `json:"positive"`
+	VmsRule     AffinityRule `json:"vms_rule"`
+}
+
+// type AffinityLabel from section 7.4 of the Redhat api guide
+type AffinityLabel struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+	ReadOnly    bool   `json:"read_only"`
+}
+
+// type AffinityRule from section 7.5 of the Redhat api guide
+type AffinityRule struct {
+	Enabled   bool `json:"enabled"`
+	Enforcing bool `json:"enforcing"`
+	Positive  bool `json:"positive"`
+}
+
+// type Agent from section 7.6 of the Redhat api guide
+type Agent struct {
+	Address        string   `json:"address"`
+	Comment        string   `json:"comment"`
+	Concurrent     bool     `json:"concurrent"`
+	Description    string   `json:"description"`
+	EncryptOptions bool     `json:"encrypt_options"`
+	Id             string   `json:"id"`
+	Name           string   `json:"name"`
+	Options        []Option `json:"options"`
+	Order          int      `json:"order"`
+	Password       string   `json:"password"`
+	Port           int      `json:"port"`
+	Type           string   `json:"type"`
+	Username       string   `json:"username"`
+}
+
+// type AgentConfiguration from section 7.7 of the Redhat api guide
+type AgentConfiguration struct {
+	Address         string            `json:"address"`
+	BrokerType      MessageBrokerType `json:"broker_type"`
+	NetworkMappings string            `json:"network_mappings"`
+	Password        string            `json:"password"`
+	Port            int               `json:"port"`
+	Username        string            `json:"username"`
+}
+
+// type Api from section 7.8 of the Redhat api guide
+type Api struct {
+	ProductInfo    ProductInfo    `json:"product_info"`
+	SpecialObjects SpecialObjects `json:"special_objects"`
+	Summary        ApiSummary     `json:"summary"`
+	Time           Date           `json:"time"`
+}
+
+// type ApiSummary from section 7.9 of the Redhat api guide
+type ApiSummary struct {
+	Hosts          ApiSummaryItem `json:"hosts"`
+	StorageDomains ApiSummaryItem `json:"storage_domains"`
+	Users          ApiSummaryItem `json:"users"`
+	Vms            ApiSummaryItem `json:"vms"`
+}
+
+// type ApiSummaryItem from section 7.10 of the Redhat api guide
+type ApiSummaryItem struct {
+	Active int `json:"active"`
+	Total  int `json:"total"`
+}
+
+// type Application from section 7.11 of the Redhat api guide
+type Application struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type Architecture from section 7.12 of the Redhat api guide
+type Architecture struct {
+	Ppc64     string `json:"ppc64"`
+	S390X     string `json:"s390x"`
+	Undefined string `json:"undefined"`
+	X8664     string `json:"x86_64"`
+}
+
+// type AuthorizedKey from section 7.13 of the Redhat api guide
+type AuthorizedKey struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Key         string `json:"key"`
+	Name        string `json:"name"`
+}
+
+// type AutoNumaStatus from section 7.14 of the Redhat api guide
+type AutoNumaStatus struct {
+	Disable string `json:"disable"`
+	Enable  string `json:"enable"`
+	Unknown string `json:"unknown"`
+}
+
+// type Balance from section 7.15 of the Redhat api guide
+type Balance struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type Bios from section 7.16 of the Redhat api guide
+type Bios struct {
+	BootMenu BootMenu `json:"boot_menu"`
+}
+
+// type BlockStatistic from section 7.17 of the Redhat api guide
+type BlockStatistic struct {
+	Statistics []Statistic `json:"statistics"`
+}
+
+// type Bonding from section 7.18 of the Redhat api guide
+type Bonding struct {
+	AdPartnerMac Mac       `json:"ad_partner_mac"`
+	Options      []Option  `json:"options"`
+	Slaves       []HostNic `json:"slaves"`
+}
+
+// type Bookmark from section 7.19 of the Redhat api guide
+type Bookmark struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+	Value       string `json:"value"`
+}
+
+// type Boot from section 7.20 of the Redhat api guide
+type Boot struct {
+	Devices []BootDevice `json:"devices"`
+}
+
+// type BootDevice from section 7.21 of the Redhat api guide
+type BootDevice struct {
+	Cdrom   string `json:"cdrom"`
+	Hd      string `json:"hd"`
+	Network string `json:"network"`
+}
+
+// type BootMenu from section 7.22 of the Redhat api guide
+type BootMenu struct {
+	Enabled bool `json:"enabled"`
+}
+
+// type BootProtocol from section 7.23 of the Redhat api guide
+type BootProtocol struct {
+	Autoconf         string `json:"autoconf"`
+	Dhcp             string `json:"dhcp"`
+	None             string `json:"none"`
+	PolyDhcpAutoconf string `json:"poly_dhcp_autoconf"`
+	Static           string `json:"static"`
+}
+
+// type BrickProfileDetail from section 7.24 of the Redhat api guide
+type BrickProfileDetail struct {
+	ProfileDetails []ProfileDetail `json:"profile_details"`
+}
+
+// type Cdrom from section 7.25 of the Redhat api guide
+type Cdrom struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	File        File   `json:"file"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type Certificate from section 7.26 of the Redhat api guide
+type Certificate struct {
+	Comment      string `json:"comment"`
+	Content      string `json:"content"`
+	Description  string `json:"description"`
+	Id           string `json:"id"`
+	Name         string `json:"name"`
+	Organization string `json:"organization"`
+	Subject      string `json:"subject"`
+}
+
+// type CloudInit from section 7.27 of the Redhat api guide
+type CloudInit struct {
+	AuthorizedKeys       []AuthorizedKey      `json:"authorized_keys"`
+	Files                []File               `json:"files"`
+	Host                 Host                 `json:"host"`
+	NetworkConfiguration NetworkConfiguration `json:"network_configuration"`
+	RegenerateSshKeys    bool                 `json:"regenerate_ssh_keys"`
+	Timezone             string               `json:"timezone"`
+	Users                []User               `json:"users"`
+}
+
+// type Cluster from section 7.28 of the Redhat api guide
+type Cluster struct {
+	BallooningEnabled                bool             `json:"ballooning_enabled"`
+	Comment                          string           `json:"comment"`
+	Cpu                              Cpu              `json:"cpu"`
+	CustomSchedulingPolicyProperties []Property       `json:"custom_scheduling_policy_properties"`
+	Description                      string           `json:"description"`
+	Display                          Display          `json:"display"`
+	ErrorHandling                    ErrorHandling    `json:"error_handling"`
+	FencingPolicy                    FencingPolicy    `json:"fencing_policy"`
+	FirewallType                     FirewallType     `json:"firewall_type"`
+	GlusterService                   bool             `json:"gluster_service"`
+	GlusterTunedProfile              string           `json:"gluster_tuned_profile"`
+	HaReservation                    bool             `json:"ha_reservation"`
+	Id                               string           `json:"id"`
+	Ksm                              Ksm              `json:"ksm"`
+	MaintenanceReasonRequired        bool             `json:"maintenance_reason_required"`
+	MemoryPolicy                     MemoryPolicy     `json:"memory_policy"`
+	Migration                        MigrationOptions `json:"migration"`
+	Name                             string           `json:"name"`
+	OptionalReason                   bool             `json:"optional_reason"`
+	RequiredRngSources               []RngSource      `json:"required_rng_sources"`
+	SerialNumber                     SerialNumber     `json:"serial_number"`
+	SupportedVersions                []Version        `json:"supported_versions"`
+	SwitchType                       SwitchType       `json:"switch_type"`
+	ThreadsAsCores                   bool             `json:"threads_as_cores"`
+	TrustedService                   bool             `json:"trusted_service"`
+	TunnelMigration                  bool             `json:"tunnel_migration"`
+	Version                          Version          `json:"version"`
+	VirtService                      bool             `json:"virt_service"`
+}
+
+// type ClusterFeature from section 7.29 of the Redhat api guide
+type ClusterFeature struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type ClusterLevel from section 7.30 of the Redhat api guide
+type ClusterLevel struct {
+	Comment     string    `json:"comment"`
+	CpuTypes    []CpuType `json:"cpu_types"`
+	Description string    `json:"description"`
+	Id          string    `json:"id"`
+	Name        string    `json:"name"`
+	Permits     []Permit  `json:"permits"`
+}
+
+// type Configuration from section 7.31 of the Redhat api guide
+type Configuration struct {
+	Data string            `json:"data"`
+	Type ConfigurationType `json:"type"`
+}
+
+// type ConfigurationType from section 7.32 of the Redhat api guide
+type ConfigurationType struct {
+	Ova string `json:"ova"`
+	Ovf string `json:"ovf"`
+}
+
+// type Console from section 7.33 of the Redhat api guide
+type Console struct {
+	Enabled bool `json:"enabled"`
+}
+
+// type Core from section 7.34 of the Redhat api guide
+type Core struct {
+	Index  int `json:"index"`
+	Socket int `json:"socket"`
+}
+
+// type Cpu from section 7.35 of the Redhat api guide
+type Cpu struct {
+	Architecture Architecture `json:"architecture"`
+	Cores        []Core       `json:"cores"`
+	CpuTune      CpuTune      `json:"cpu_tune"`
+	Level        int          `json:"level"`
+	Mode         CpuMode      `json:"mode"`
+	Name         string       `json:"name"`
+	Speed        Decimal      `json:"speed"`
+	Topology     CpuTopology  `json:"topology"`
+	Type         string       `json:"type"`
+}
+
+// type CpuMode from section 7.36 of the Redhat api guide
+type CpuMode struct {
+	Custom          string `json:"custom"`
+	HostModel       string `json:"host_model"`
+	HostPassthrough string `json:"host_passthrough"`
+}
+
+// type CpuProfile from section 7.37 of the Redhat api guide
+type CpuProfile struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type CpuTopology from section 7.38 of the Redhat api guide
+type CpuTopology struct {
+	Cores   int `json:"cores"`
+	Sockets int `json:"sockets"`
+	Threads int `json:"threads"`
+}
+
+// type CpuTune from section 7.39 of the Redhat api guide
+type CpuTune struct {
+	VcpuPins []VcpuPin `json:"vcpu_pins"`
+}
+
+// type CpuType from section 7.40 of the Redhat api guide
+type CpuType struct {
+	Architecture Architecture `json:"architecture"`
+	Level        int          `json:"level"`
+	Name         string       `json:"name"`
+}
+
+// type CreationStatus from section 7.41 of the Redhat api guide
+type CreationStatus struct {
+	Complete   string `json:"complete"`
+	Failed     string `json:"failed"`
+	InProgress string `json:"in_progress"`
+	Pending    string `json:"pending"`
+}
+
+// type CustomProperty from section 7.42 of the Redhat api guide
+type CustomProperty struct {
+	Name   string `json:"name"`
+	Regexp string `json:"regexp"`
+	Value  string `json:"value"`
+}
+
+// type DataCenter from section 7.43 of the Redhat api guide
+type DataCenter struct {
+	Comment           string           `json:"comment"`
+	Description       string           `json:"description"`
+	Id                string           `json:"id"`
+	Local             bool             `json:"local"`
+	Name              string           `json:"name"`
+	QuotaMode         QuotaModeType    `json:"quota_mode"`
+	Status            DataCenterStatus `json:"status"`
+	StorageFormat     StorageFormat    `json:"storage_format"`
+	SupportedVersions []Version        `json:"supported_versions"`
+	Version           Version          `json:"version"`
+}
+
+// type DataCenterStatus from section 7.44 of the Redhat api guide
+type DataCenterStatus struct {
+	Contend        string `json:"contend"`
+	Maintenance    string `json:"maintenance"`
+	NotOperational string `json:"not_operational"`
+	Problematic    string `json:"problematic"`
+	Uninitialized  string `json:"uninitialized"`
+	Up             string `json:"up"`
+}
+
+// type Device from section 7.45 of the Redhat api guide
+type Device struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type Disk from section 7.46 of the Redhat api guide
+type Disk struct {
+	Active              bool            `json:"active"`
+	ActualSize          int             `json:"actual_size"`
+	Alias               string          `json:"alias"`
+	Bootable            bool            `json:"bootable"`
+	Comment             string          `json:"comment"`
+	ContentType         DiskContentType `json:"content_type"`
+	Description         string          `json:"description"`
+	Format              DiskFormat      `json:"format"`
+	Id                  string          `json:"id"`
+	ImageId             string          `json:"image_id"`
+	InitialSize         int             `json:"initial_size"`
+	Interface           DiskInterface   `json:"interface"`
+	LogicalName         string          `json:"logical_name"`
+	LunStorage          HostStorage     `json:"lun_storage"`
+	Name                string          `json:"name"`
+	PropagateErrors     bool            `json:"propagate_errors"`
+	ProvisionedSize     int             `json:"provisioned_size"`
+	QcowVersion         QcowVersion     `json:"qcow_version"`
+	ReadOnly            bool            `json:"read_only"`
+	Sgio                ScsiGenericIO   `json:"sgio"`
+	Shareable           bool            `json:"shareable"`
+	Sparse              bool            `json:"sparse"`
+	Status              DiskStatus      `json:"status"`
+	StorageType         DiskStorageType `json:"storage_type"`
+	TotalSize           int             `json:"total_size"`
+	UsesScsiReservation bool            `json:"uses_scsi_reservation"`
+	WipeAfterDelete     bool            `json:"wipe_after_delete"`
+}
+
+// type DiskAttachment from section 7.47 of the Redhat api guide
+type DiskAttachment struct {
+	Active              bool          `json:"active"`
+	Bootable            bool          `json:"bootable"`
+	Comment             string        `json:"comment"`
+	Description         string        `json:"description"`
+	Id                  string        `json:"id"`
+	Interface           DiskInterface `json:"interface"`
+	LogicalName         string        `json:"logical_name"`
+	Name                string        `json:"name"`
+	PassDiscard         bool          `json:"pass_discard"`
+	ReadOnly            bool          `json:"read_only"`
+	UsesScsiReservation bool          `json:"uses_scsi_reservation"`
+}
+
+// type DiskContentType from section 7.48 of the Redhat api guide
+type DiskContentType struct {
+	Data                 string `json:"data"`
+	Iso                  string `json:"iso"`
+	MemoryDumpVolume     string `json:"memory_dump_volume"`
+	MemoryMetadataVolume string `json:"memory_metadata_volume"`
+	OvfStore             string `json:"ovf_store"`
+}
+
+// type DiskFormat from section 7.49 of the Redhat api guide
+type DiskFormat struct {
+	Cow string `json:"cow"`
+	Raw string `json:"raw"`
+}
+
+// type DiskInterface from section 7.50 of the Redhat api guide
+type DiskInterface struct {
+	Ide        string `json:"ide"`
+	SpaprVscsi string `json:"spapr_vscsi"`
+	Virtio     string `json:"virtio"`
+	VirtioScsi string `json:"virtio_scsi"`
+}
+
+// type DiskProfile from section 7.51 of the Redhat api guide
+type DiskProfile struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type DiskSnapshot from section 7.52 of the Redhat api guide
+type DiskSnapshot struct {
+	Active              bool            `json:"active"`
+	ActualSize          int             `json:"actual_size"`
+	Alias               string          `json:"alias"`
+	Bootable            bool            `json:"bootable"`
+	Comment             string          `json:"comment"`
+	ContentType         DiskContentType `json:"content_type"`
+	Description         string          `json:"description"`
+	Format              DiskFormat      `json:"format"`
+	Id                  string          `json:"id"`
+	ImageId             string          `json:"image_id"`
+	InitialSize         int             `json:"initial_size"`
+	Interface           DiskInterface   `json:"interface"`
+	LogicalName         string          `json:"logical_name"`
+	LunStorage          HostStorage     `json:"lun_storage"`
+	Name                string          `json:"name"`
+	PropagateErrors     bool            `json:"propagate_errors"`
+	ProvisionedSize     int             `json:"provisioned_size"`
+	QcowVersion         QcowVersion     `json:"qcow_version"`
+	ReadOnly            bool            `json:"read_only"`
+	Sgio                ScsiGenericIO   `json:"sgio"`
+	Shareable           bool            `json:"shareable"`
+	Sparse              bool            `json:"sparse"`
+	Status              DiskStatus      `json:"status"`
+	StorageType         DiskStorageType `json:"storage_type"`
+	TotalSize           int             `json:"total_size"`
+	UsesScsiReservation bool            `json:"uses_scsi_reservation"`
+	WipeAfterDelete     bool            `json:"wipe_after_delete"`
+}
+
+// type DiskStatus from section 7.53 of the Redhat api guide
+type DiskStatus struct {
+	Illegal string `json:"illegal"`
+	Locked  string `json:"locked"`
+	Ok      string `json:"ok"`
+}
+
+// type DiskStorageType from section 7.54 of the Redhat api guide
+type DiskStorageType struct {
+	Cinder string `json:"cinder"`
+	Image  string `json:"image"`
+	Lun    string `json:"lun"`
+}
+
+// type DiskType from section 7.55 of the Redhat api guide
+type DiskType struct {
+	Data   string `json:"data"`
+	System string `json:"system"`
+}
+
+// type Display from section 7.56 of the Redhat api guide
+type Display struct {
+	Address             string      `json:"address"`
+	AllowOverride       bool        `json:"allow_override"`
+	Certificate         Certificate `json:"certificate"`
+	CopyPasteEnabled    bool        `json:"copy_paste_enabled"`
+	DisconnectAction    string      `json:"disconnect_action"`
+	FileTransferEnabled bool        `json:"file_transfer_enabled"`
+	KeyboardLayout      string      `json:"keyboard_layout"`
+	Monitors            int         `json:"monitors"`
+	Port                int         `json:"port"`
+	Proxy               string      `json:"proxy"`
+	SecurePort          int         `json:"secure_port"`
+	SingleQxlPci        bool        `json:"single_qxl_pci"`
+	SmartcardEnabled    bool        `json:"smartcard_enabled"`
+	Type                DisplayType `json:"type"`
+}
+
+// type DisplayType from section 7.57 of the Redhat api guide
+type DisplayType struct {
+	Spice string `json:"spice"`
+	Vnc   string `json:"vnc"`
+}
+
+// type Dns from section 7.58 of the Redhat api guide
+type Dns struct {
+	SearchDomains []Host `json:"search_domains"`
+	Servers       []Host `json:"servers"`
+}
+
+// type DnsResolverConfiguration from section 7.59 of the Redhat api guide
+type DnsResolverConfiguration struct {
+	NameServers []string `json:"name_servers"`
+}
+
+// type Domain from section 7.60 of the Redhat api guide
+type Domain struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+	User        User   `json:"user"`
+}
+
+// type EntityExternalStatus from section 7.61 of the Redhat api guide
+type EntityExternalStatus struct {
+	Error   string `json:"error"`
+	Failure string `json:"failure"`
+	Info    string `json:"info"`
+	Ok      string `json:"ok"`
+	Warning string `json:"warning"`
+}
+
+// type EntityProfileDetail from section 7.62 of the Redhat api guide
+type EntityProfileDetail struct {
+	ProfileDetails []ProfileDetail `json:"profile_details"`
+}
+
+// type ErrorHandling from section 7.63 of the Redhat api guide
+type ErrorHandling struct {
+	OnError MigrateOnError `json:"on_error"`
+}
+
+// type Event from section 7.64 of the Redhat api guide
+type Event struct {
+	Code          int         `json:"code"`
+	Comment       string      `json:"comment"`
+	CorrelationId string      `json:"correlation_id"`
+	CustomData    string      `json:"custom_data"`
+	CustomId      int         `json:"custom_id"`
+	Description   string      `json:"description"`
+	FloodRate     int         `json:"flood_rate"`
+	Id            string      `json:"id"`
+	Index         int         `json:"index"`
+	Name          string      `json:"name"`
+	Origin        string      `json:"origin"`
+	Severity      LogSeverity `json:"severity"`
+	Time          Date        `json:"time"`
+}
+
+// type ExternalComputeResource from section 7.65 of the Redhat api guide
+type ExternalComputeResource struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+	Provider    string `json:"provider"`
+	Url         string `json:"url"`
+	User        string `json:"user"`
+}
+
+// type ExternalDiscoveredHost from section 7.66 of the Redhat api guide
+type ExternalDiscoveredHost struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Ip          string `json:"ip"`
+	LastReport  string `json:"last_report"`
+	Mac         string `json:"mac"`
+	Name        string `json:"name"`
+	SubnetName  string `json:"subnet_name"`
+}
+
+// type ExternalHost from section 7.67 of the Redhat api guide
+type ExternalHost struct {
+	Address     string `json:"address"`
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type ExternalHostGroup from section 7.68 of the Redhat api guide
+type ExternalHostGroup struct {
+	ArchitectureName    string `json:"architecture_name"`
+	Comment             string `json:"comment"`
+	Description         string `json:"description"`
+	DomainName          string `json:"domain_name"`
+	Id                  string `json:"id"`
+	Name                string `json:"name"`
+	OperatingSystemName string `json:"operating_system_name"`
+	SubnetName          string `json:"subnet_name"`
+}
+
+// type ExternalHostProvider from section 7.69 of the Redhat api guide
+type ExternalHostProvider struct {
+	AuthenticationUrl      string     `json:"authentication_url"`
+	Comment                string     `json:"comment"`
+	Description            string     `json:"description"`
+	Id                     string     `json:"id"`
+	Name                   string     `json:"name"`
+	Password               string     `json:"password"`
+	Properties             []Property `json:"properties"`
+	RequiresAuthentication bool       `json:"requires_authentication"`
+	Url                    string     `json:"url"`
+	Username               string     `json:"username"`
+}
+
+// type ExternalNetworkProviderConfiguration from section 7.70 of the Redhat api guide
+type ExternalNetworkProviderConfiguration struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type ExternalProvider from section 7.71 of the Redhat api guide
+type ExternalProvider struct {
+	AuthenticationUrl      string     `json:"authentication_url"`
+	Comment                string     `json:"comment"`
+	Description            string     `json:"description"`
+	Id                     string     `json:"id"`
+	Name                   string     `json:"name"`
+	Password               string     `json:"password"`
+	Properties             []Property `json:"properties"`
+	RequiresAuthentication bool       `json:"requires_authentication"`
+	Url                    string     `json:"url"`
+	Username               string     `json:"username"`
+}
+
+// type ExternalStatus from section 7.72 of the Redhat api guide
+type ExternalStatus struct {
+	Error   string `json:"error"`
+	Failure string `json:"failure"`
+	Info    string `json:"info"`
+	Ok      string `json:"ok"`
+	Warning string `json:"warning"`
+}
+
+// type ExternalSystemType from section 7.73 of the Redhat api guide
+type ExternalSystemType struct {
+	Gluster string `json:"gluster"`
+	Vdsm    string `json:"vdsm"`
+}
+
+// type ExternalVmImport from section 7.74 of the Redhat api guide
+type ExternalVmImport struct {
+	Name     string                 `json:"name"`
+	Password string                 `json:"password"`
+	Provider ExternalVmProviderType `json:"provider"`
+	Sparse   bool                   `json:"sparse"`
+	Url      string                 `json:"url"`
+	Username string                 `json:"username"`
+}
+
+// type ExternalVmProviderType from section 7.75 of the Redhat api guide
+type ExternalVmProviderType struct {
+	Kvm    string `json:"kvm"`
+	Vmware string `json:"vmware"`
+	Xen    string `json:"xen"`
+}
+
+// type Fault from section 7.76 of the Redhat api guide
+type Fault struct {
+	Detail string `json:"detail"`
+	Reason string `json:"reason"`
+}
+
+// type FenceType from section 7.77 of the Redhat api guide
+type FenceType struct {
+	Manual  string `json:"manual"`
+	Restart string `json:"restart"`
+	Start   string `json:"start"`
+	Status  string `json:"status"`
+	Stop    string `json:"stop"`
+}
+
+// type FencingPolicy from section 7.78 of the Redhat api guide
+type FencingPolicy struct {
+	Enabled                   bool                     `json:"enabled"`
+	SkipIfConnectivityBroken  SkipIfConnectivityBroken `json:"skip_if_connectivity_broken"`
+	SkipIfGlusterBricksUp     bool                     `json:"skip_if_gluster_bricks_up"`
+	SkipIfGlusterQuorumNotMet bool                     `json:"skip_if_gluster_quorum_not_met"`
+	SkipIfSdActive            SkipIfSdActive           `json:"skip_if_sd_active"`
+}
+
+// type File from section 7.79 of the Redhat api guide
+type File struct {
+	Comment     string `json:"comment"`
+	Content     string `json:"content"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+	Type        string `json:"type"`
+}
+
+// type Filter from section 7.80 of the Redhat api guide
+type Filter struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+	Position    int    `json:"position"`
+}
+
+// type FirewallType from section 7.81 of the Redhat api guide
+type FirewallType struct {
+	Firewalld string `json:"firewalld"`
+	Iptables  string `json:"iptables"`
+}
+
+// type Floppy from section 7.82 of the Redhat api guide
+type Floppy struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	File        File   `json:"file"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type FopStatistic from section 7.83 of the Redhat api guide
+type FopStatistic struct {
+	Name       string      `json:"name"`
+	Statistics []Statistic `json:"statistics"`
+}
+
+// type GlusterBrick from section 7.84 of the Redhat api guide
+type GlusterBrick struct {
+	BrickDir       string              `json:"brick_dir"`
+	Comment        string              `json:"comment"`
+	Description    string              `json:"description"`
+	Device         string              `json:"device"`
+	FsName         string              `json:"fs_name"`
+	GlusterClients []GlusterClient     `json:"gluster_clients"`
+	Id             string              `json:"id"`
+	MemoryPools    []GlusterMemoryPool `json:"memory_pools"`
+	MntOptions     string              `json:"mnt_options"`
+	Name           string              `json:"name"`
+	Pid            int                 `json:"pid"`
+	Port           int                 `json:"port"`
+	ServerId       string              `json:"server_id"`
+	Status         GlusterBrickStatus  `json:"status"`
+}
+
+// type GlusterBrickAdvancedDetails from section 7.85 of the Redhat api guide
+type GlusterBrickAdvancedDetails struct {
+	Comment        string              `json:"comment"`
+	Description    string              `json:"description"`
+	Device         string              `json:"device"`
+	FsName         string              `json:"fs_name"`
+	GlusterClients []GlusterClient     `json:"gluster_clients"`
+	Id             string              `json:"id"`
+	MemoryPools    []GlusterMemoryPool `json:"memory_pools"`
+	MntOptions     string              `json:"mnt_options"`
+	Name           string              `json:"name"`
+	Pid            int                 `json:"pid"`
+	Port           int                 `json:"port"`
+}
+
+// type GlusterBrickMemoryInfo from section 7.86 of the Redhat api guide
+type GlusterBrickMemoryInfo struct {
+	MemoryPools []GlusterMemoryPool `json:"memory_pools"`
+}
+
+// type GlusterBrickStatus from section 7.87 of the Redhat api guide
+type GlusterBrickStatus struct {
+	Down    string `json:"down"`
+	Unknown string `json:"unknown"`
+	Up      string `json:"up"`
+}
+
+// type GlusterClient from section 7.88 of the Redhat api guide
+type GlusterClient struct {
+	BytesRead    int    `json:"bytes_read"`
+	BytesWritten int    `json:"bytes_written"`
+	ClientPort   int    `json:"client_port"`
+	HostName     string `json:"host_name"`
+}
+
+// type GlusterHook from section 7.89 of the Redhat api guide
+type GlusterHook struct {
+	Checksum       string            `json:"checksum"`
+	Comment        string            `json:"comment"`
+	ConflictStatus int               `json:"conflict_status"`
+	Conflicts      string            `json:"conflicts"`
+	Content        string            `json:"content"`
+	ContentType    HookContentType   `json:"content_type"`
+	Description    string            `json:"description"`
+	GlusterCommand string            `json:"gluster_command"`
+	Id             string            `json:"id"`
+	Name           string            `json:"name"`
+	Stage          HookStage         `json:"stage"`
+	Status         GlusterHookStatus `json:"status"`
+}
+
+// type GlusterHookStatus from section 7.90 of the Redhat api guide
+type GlusterHookStatus struct {
+	Disabled string `json:"disabled"`
+	Enabled  string `json:"enabled"`
+	Missing  string `json:"missing"`
+}
+
+// type GlusterMemoryPool from section 7.91 of the Redhat api guide
+type GlusterMemoryPool struct {
+	AllocCount  int    `json:"alloc_count"`
+	ColdCount   int    `json:"cold_count"`
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	HotCount    int    `json:"hot_count"`
+	Id          string `json:"id"`
+	MaxAlloc    int    `json:"max_alloc"`
+	MaxStdalloc int    `json:"max_stdalloc"`
+	Name        string `json:"name"`
+	PaddedSize  int    `json:"padded_size"`
+	PoolMisses  int    `json:"pool_misses"`
+	Type        string `json:"type"`
+}
+
+// type GlusterServerHook from section 7.92 of the Redhat api guide
+type GlusterServerHook struct {
+	Checksum    string            `json:"checksum"`
+	Comment     string            `json:"comment"`
+	ContentType HookContentType   `json:"content_type"`
+	Description string            `json:"description"`
+	Id          string            `json:"id"`
+	Name        string            `json:"name"`
+	Status      GlusterHookStatus `json:"status"`
+}
+
+// type GlusterState from section 7.93 of the Redhat api guide
+type GlusterState struct {
+	Down    string `json:"down"`
+	Unknown string `json:"unknown"`
+	Up      string `json:"up"`
+}
+
+// type GlusterVolume from section 7.94 of the Redhat api guide
+type GlusterVolume struct {
+	Comment         string              `json:"comment"`
+	Description     string              `json:"description"`
+	DisperseCount   int                 `json:"disperse_count"`
+	Id              string              `json:"id"`
+	Name            string              `json:"name"`
+	Options         []Option            `json:"options"`
+	RedundancyCount int                 `json:"redundancy_count"`
+	ReplicaCount    int                 `json:"replica_count"`
+	Status          GlusterVolumeStatus `json:"status"`
+	StripeCount     int                 `json:"stripe_count"`
+	TransportTypes  []TransportType     `json:"transport_types"`
+	VolumeType      GlusterVolumeType   `json:"volume_type"`
+}
+
+// type GlusterVolumeProfileDetails from section 7.95 of the Redhat api guide
+type GlusterVolumeProfileDetails struct {
+	BrickProfileDetails []BrickProfileDetail `json:"brick_profile_details"`
+	Comment             string               `json:"comment"`
+	Description         string               `json:"description"`
+	Id                  string               `json:"id"`
+	Name                string               `json:"name"`
+	NfsProfileDetails   []NfsProfileDetail   `json:"nfs_profile_details"`
+}
+
+// type GlusterVolumeStatus from section 7.96 of the Redhat api guide
+type GlusterVolumeStatus struct {
+	Down    string `json:"down"`
+	Unknown string `json:"unknown"`
+	Up      string `json:"up"`
+}
+
+// type GlusterVolumeType from section 7.97 of the Redhat api guide
+type GlusterVolumeType struct {
+	Disperse                    string `json:"disperse"`
+	Distribute                  string `json:"distribute"`
+	DistributedDisperse         string `json:"distributed_disperse"`
+	DistributedReplicate        string `json:"distributed_replicate"`
+	DistributedStripe           string `json:"distributed_stripe"`
+	DistributedStripedReplicate string `json:"distributed_striped_replicate"`
+	Replicate                   string `json:"replicate"`
+	Stripe                      string `json:"stripe"`
+	StripedReplicate            string `json:"striped_replicate"`
+}
+
+// type GracePeriod from section 7.98 of the Redhat api guide
+type GracePeriod struct {
+	Expiry int `json:"expiry"`
+}
+
+// type GraphicsConsole from section 7.99 of the Redhat api guide
+type GraphicsConsole struct {
+	Address     string       `json:"address"`
+	Comment     string       `json:"comment"`
+	Description string       `json:"description"`
+	Id          string       `json:"id"`
+	Name        string       `json:"name"`
+	Port        int          `json:"port"`
+	Protocol    GraphicsType `json:"protocol"`
+	TlsPort     int          `json:"tls_port"`
+}
+
+// type GraphicsType from section 7.100 of the Redhat api guide
+type GraphicsType struct {
+	Spice string `json:"spice"`
+	Vnc   string `json:"vnc"`
+}
+
+// type Group from section 7.101 of the Redhat api guide
+type Group struct {
+	Comment       string `json:"comment"`
+	Description   string `json:"description"`
+	DomainEntryId string `json:"domain_entry_id"`
+	Id            string `json:"id"`
+	Name          string `json:"name"`
+	Namespace     string `json:"namespace"`
+}
+
+// type GuestOperatingSystem from section 7.102 of the Redhat api guide
+type GuestOperatingSystem struct {
+	Architecture string  `json:"architecture"`
+	Codename     string  `json:"codename"`
+	Distribution string  `json:"distribution"`
+	Family       string  `json:"family"`
+	Kernel       Kernel  `json:"kernel"`
+	Version      Version `json:"version"`
+}
+
+// type HardwareInformation from section 7.103 of the Redhat api guide
+type HardwareInformation struct {
+	Family              string      `json:"family"`
+	Manufacturer        string      `json:"manufacturer"`
+	ProductName         string      `json:"product_name"`
+	SerialNumber        string      `json:"serial_number"`
+	SupportedRngSources []RngSource `json:"supported_rng_sources"`
+	Uuid                string      `json:"uuid"`
+	Version             string      `json:"version"`
+}
+
+// type HighAvailability from section 7.104 of the Redhat api guide
+type HighAvailability struct {
+	Enabled  bool `json:"enabled"`
+	Priority int  `json:"priority"`
+}
+
+// type Hook from section 7.105 of the Redhat api guide
+type Hook struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	EventName   string `json:"event_name"`
+	Id          string `json:"id"`
+	Md5         string `json:"md5"`
+	Name        string `json:"name"`
+}
+
+// type HookContentType from section 7.106 of the Redhat api guide
+type HookContentType struct {
+	Binary string `json:"binary"`
+	Text   string `json:"text"`
+}
+
+// type HookStage from section 7.107 of the Redhat api guide
+type HookStage struct {
+	Post string `json:"post"`
+	Pre  string `json:"pre"`
+}
+
+// type HookStatus from section 7.108 of the Redhat api guide
+type HookStatus struct {
+	Disabled string `json:"disabled"`
+	Enabled  string `json:"enabled"`
+	Missing  string `json:"missing"`
+}
+
+// type Host from section 7.109 of the Redhat api guide
+type Host struct {
+	Address                    string                `json:"address"`
+	AutoNumaStatus             AutoNumaStatus        `json:"auto_numa_status"`
+	Certificate                Certificate           `json:"certificate"`
+	Comment                    string                `json:"comment"`
+	Cpu                        Cpu                   `json:"cpu"`
+	Description                string                `json:"description"`
+	DevicePassthrough          HostDevicePassthrough `json:"device_passthrough"`
+	Display                    Display               `json:"display"`
+	ExternalStatus             ExternalStatus        `json:"external_status"`
+	HardwareInformation        HardwareInformation   `json:"hardware_information"`
+	HostedEngine               HostedEngine          `json:"hosted_engine"`
+	Id                         string                `json:"id"`
+	Iscsi                      IscsiDetails          `json:"iscsi"`
+	KdumpStatus                KdumpStatus           `json:"kdump_status"`
+	Ksm                        Ksm                   `json:"ksm"`
+	LibvirtVersion             Version               `json:"libvirt_version"`
+	MaxSchedulingMemory        int                   `json:"max_scheduling_memory"`
+	Memory                     int                   `json:"memory"`
+	Name                       string                `json:"name"`
+	NetworkOperationInProgress bool                  `json:"network_operation_in_progress"`
+	NumaSupported              bool                  `json:"numa_supported"`
+	Os                         OperatingSystem       `json:"os"`
+	OverrideIptables           bool                  `json:"override_iptables"`
+	Port                       int                   `json:"port"`
+	PowerManagement            PowerManagement       `json:"power_management"`
+	Protocol                   HostProtocol          `json:"protocol"`
+	RootPassword               string                `json:"root_password"`
+	SeLinux                    SeLinux               `json:"se_linux"`
+	Spm                        Spm                   `json:"spm"`
+	Ssh                        Ssh                   `json:"ssh"`
+	Status                     HostStatus            `json:"status"`
+	StatusDetail               string                `json:"status_detail"`
+	Summary                    VmSummary             `json:"summary"`
+	TransparentHugePages       TransparentHugePages  `json:"transparent_huge_pages"`
+	Type                       HostType              `json:"type"`
+	UpdateAvailable            bool                  `json:"update_available"`
+	Version                    Version               `json:"version"`
+}
+
+// type HostDevice from section 7.110 of the Redhat api guide
+type HostDevice struct {
+	Capability       string     `json:"capability"`
+	Comment          string     `json:"comment"`
+	Description      string     `json:"description"`
+	Driver           string     `json:"driver"`
+	Id               string     `json:"id"`
+	IommuGroup       int        `json:"iommu_group"`
+	Name             string     `json:"name"`
+	PhysicalFunction HostDevice `json:"physical_function"`
+	Placeholder      bool       `json:"placeholder"`
+	Product          Product    `json:"product"`
+	Vendor           Vendor     `json:"vendor"`
+	VirtualFunctions int        `json:"virtual_functions"`
+}
+
+// type HostDevicePassthrough from section 7.111 of the Redhat api guide
+type HostDevicePassthrough struct {
+	Enabled bool `json:"enabled"`
+}
+
+// type HostNic from section 7.112 of the Redhat api guide
+type HostNic struct {
+	AdAggregatorId                int                                  `json:"ad_aggregator_id"`
+	BaseInterface                 string                               `json:"base_interface"`
+	Bonding                       Bonding                              `json:"bonding"`
+	BootProtocol                  BootProtocol                         `json:"boot_protocol"`
+	Bridged                       bool                                 `json:"bridged"`
+	CheckConnectivity             bool                                 `json:"check_connectivity"`
+	Comment                       string                               `json:"comment"`
+	CustomConfiguration           bool                                 `json:"custom_configuration"`
+	Description                   string                               `json:"description"`
+	Id                            string                               `json:"id"`
+	Ip                            Ip                                   `json:"ip"`
+	Ipv6                          Ip                                   `json:"ipv6"`
+	Ipv6BootProtocol              BootProtocol                         `json:"ipv6_boot_protocol"`
+	Mac                           Mac                                  `json:"mac"`
+	Mtu                           int                                  `json:"mtu"`
+	Name                          string                               `json:"name"`
+	NetworkLabels                 []NetworkLabel                       `json:"network_labels"`
+	OverrideConfiguration         bool                                 `json:"override_configuration"`
+	Properties                    []Property                           `json:"properties"`
+	Speed                         int                                  `json:"speed"`
+	Statistics                    []Statistic                          `json:"statistics"`
+	Status                        NicStatus                            `json:"status"`
+	VirtualFunctionsConfiguration HostNicVirtualFunctionsConfiguration `json:"virtual_functions_configuration"`
+	Vlan                          Vlan                                 `json:"vlan"`
+}
+
+// type HostNicVirtualFunctionsConfiguration from section 7.113 of the Redhat api guide
+type HostNicVirtualFunctionsConfiguration struct {
+	AllNetworksAllowed          bool `json:"all_networks_allowed"`
+	MaxNumberOfVirtualFunctions int  `json:"max_number_of_virtual_functions"`
+	NumberOfVirtualFunctions    int  `json:"number_of_virtual_functions"`
+}
+
+// type HostProtocol from section 7.114 of the Redhat api guide
+type HostProtocol struct {
+	Stomp string `json:"stomp"`
+	Xml   string `json:"xml"`
+}
+
+// type HostStatus from section 7.115 of the Redhat api guide
+type HostStatus struct {
+	Connecting              string `json:"connecting"`
+	Down                    string `json:"down"`
+	Error                   string `json:"error"`
+	Initializing            string `json:"initializing"`
+	InstallFailed           string `json:"install_failed"`
+	Installing              string `json:"installing"`
+	InstallingOs            string `json:"installing_os"`
+	Kdumping                string `json:"kdumping"`
+	Maintenance             string `json:"maintenance"`
+	NonOperational          string `json:"non_operational"`
+	NonResponsive           string `json:"non_responsive"`
+	PendingApproval         string `json:"pending_approval"`
+	PreparingForMaintenance string `json:"preparing_for_maintenance"`
+	Reboot                  string `json:"reboot"`
+	Unassigned              string `json:"unassigned"`
+	Up                      string `json:"up"`
+}
+
+// type HostStorage from section 7.116 of the Redhat api guide
+type HostStorage struct {
+	Address      string        `json:"address"`
+	Comment      string        `json:"comment"`
+	Description  string        `json:"description"`
+	Id           string        `json:"id"`
+	LogicalUnits []LogicalUnit `json:"logical_units"`
+	MountOptions string        `json:"mount_options"`
+	Name         string        `json:"name"`
+	NfsRetrans   int           `json:"nfs_retrans"`
+	NfsTimeo     int           `json:"nfs_timeo"`
+	NfsVersion   NfsVersion    `json:"nfs_version"`
+	OverrideLuns bool          `json:"override_luns"`
+	Password     string        `json:"password"`
+	Path         string        `json:"path"`
+	Port         int           `json:"port"`
+	Portal       string        `json:"portal"`
+	Target       string        `json:"target"`
+	Type         StorageType   `json:"type"`
+	Username     string        `json:"username"`
+	VfsType      string        `json:"vfs_type"`
+	VolumeGroup  VolumeGroup   `json:"volume_group"`
+}
+
+// type HostType from section 7.117 of the Redhat api guide
+type HostType struct {
+	OvirtNode string `json:"ovirt_node"`
+	Rhel      string `json:"rhel"`
+	RhevH     string `json:"rhev_h"`
+}
+
+// type HostedEngine from section 7.118 of the Redhat api guide
+type HostedEngine struct {
+	Active            bool `json:"active"`
+	Configured        bool `json:"configured"`
+	GlobalMaintenance bool `json:"global_maintenance"`
+	LocalMaintenance  bool `json:"local_maintenance"`
+	Score             int  `json:"score"`
+}
+
+// type Icon from section 7.119 of the Redhat api guide
+type Icon struct {
+	Comment     string `json:"comment"`
+	Data        string `json:"data"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	MediaType   string `json:"media_type"`
+	Name        string `json:"name"`
+}
+
+// type Identified from section 7.120 of the Redhat api guide
+type Identified struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type Image from section 7.121 of the Redhat api guide
+type Image struct {
+	Comment     string        `json:"comment"`
+	Description string        `json:"description"`
+	Id          string        `json:"id"`
+	Name        string        `json:"name"`
+	Size        int           `json:"size"`
+	Type        ImageFileType `json:"type"`
+}
+
+// type ImageFileType from section 7.122 of the Redhat api guide
+type ImageFileType struct {
+	Disk   string `json:"disk"`
+	Floppy string `json:"floppy"`
+	Iso    string `json:"iso"`
+}
+
+// type ImageTransfer from section 7.123 of the Redhat api guide
+type ImageTransfer struct {
+	Active            bool                   `json:"active"`
+	Comment           string                 `json:"comment"`
+	Description       string                 `json:"description"`
+	Direction         ImageTransferDirection `json:"direction"`
+	Id                string                 `json:"id"`
+	InactivityTimeout int                    `json:"inactivity_timeout"`
+	Name              string                 `json:"name"`
+	Phase             ImageTransferPhase     `json:"phase"`
+	ProxyUrl          string                 `json:"proxy_url"`
+	SignedTicket      string                 `json:"signed_ticket"`
+	TransferUrl       string                 `json:"transfer_url"`
+	Transferred       int                    `json:"transferred"`
+}
+
+// type ImageTransferDirection from section 7.124 of the Redhat api guide
+type ImageTransferDirection struct {
+	Download string `json:"download"`
+	Upload   string `json:"upload"`
+}
+
+// type ImageTransferPhase from section 7.125 of the Redhat api guide
+type ImageTransferPhase struct {
+	Cancelled         string `json:"cancelled"`
+	FinalizingFailure string `json:"finalizing_failure"`
+	FinalizingSuccess string `json:"finalizing_success"`
+	FinishedFailure   string `json:"finished_failure"`
+	FinishedSuccess   string `json:"finished_success"`
+	Initializing      string `json:"initializing"`
+	PausedSystem      string `json:"paused_system"`
+	PausedUser        string `json:"paused_user"`
+	Resuming          string `json:"resuming"`
+	Transferring      string `json:"transferring"`
+	Unknown           string `json:"unknown"`
+}
+
+// type InheritableBoolean from section 7.126 of the Redhat api guide
+type InheritableBoolean struct {
+	False   string `json:"false"`
+	Inherit string `json:"inherit"`
+	True    string `json:"true"`
+}
+
+// type Initialization from section 7.127 of the Redhat api guide
+type Initialization struct {
+	ActiveDirectoryOu string             `json:"active_directory_ou"`
+	AuthorizedSshKeys string             `json:"authorized_ssh_keys"`
+	CloudInit         CloudInit          `json:"cloud_init"`
+	Configuration     Configuration      `json:"configuration"`
+	CustomScript      string             `json:"custom_script"`
+	DnsSearch         string             `json:"dns_search"`
+	DnsServers        string             `json:"dns_servers"`
+	Domain            string             `json:"domain"`
+	HostName          string             `json:"host_name"`
+	InputLocale       string             `json:"input_locale"`
+	NicConfigurations []NicConfiguration `json:"nic_configurations"`
+	OrgName           string             `json:"org_name"`
+	RegenerateIds     bool               `json:"regenerate_ids"`
+	RegenerateSshKeys bool               `json:"regenerate_ssh_keys"`
+	RootPassword      string             `json:"root_password"`
+	SystemLocale      string             `json:"system_locale"`
+	Timezone          string             `json:"timezone"`
+	UiLanguage        string             `json:"ui_language"`
+	UserLocale        string             `json:"user_locale"`
+	UserName          string             `json:"user_name"`
+	WindowsLicenseKey string             `json:"windows_license_key"`
+}
+
+// type InstanceType from section 7.128 of the Redhat api guide
+type InstanceType struct {
+	Bios                        Bios                          `json:"bios"`
+	Comment                     string                        `json:"comment"`
+	Console                     Console                       `json:"console"`
+	Cpu                         Cpu                           `json:"cpu"`
+	CpuShares                   int                           `json:"cpu_shares"`
+	CreationTime                Date                          `json:"creation_time"`
+	CustomCompatibilityVersion  Version                       `json:"custom_compatibility_version"`
+	CustomCpuModel              string                        `json:"custom_cpu_model"`
+	CustomEmulatedMachine       string                        `json:"custom_emulated_machine"`
+	CustomProperties            []CustomProperty              `json:"custom_properties"`
+	DeleteProtected             bool                          `json:"delete_protected"`
+	Description                 string                        `json:"description"`
+	Display                     Display                       `json:"display"`
+	Domain                      Domain                        `json:"domain"`
+	HighAvailability            HighAvailability              `json:"high_availability"`
+	Id                          string                        `json:"id"`
+	Initialization              Initialization                `json:"initialization"`
+	Io                          Io                            `json:"io"`
+	LargeIcon                   Icon                          `json:"large_icon"`
+	Lease                       StorageDomainLease            `json:"lease"`
+	Memory                      int                           `json:"memory"`
+	MemoryPolicy                MemoryPolicy                  `json:"memory_policy"`
+	Migration                   MigrationOptions              `json:"migration"`
+	MigrationDowntime           int                           `json:"migration_downtime"`
+	MultiQueuesEnabled          bool                          `json:"multi_queues_enabled"`
+	Name                        string                        `json:"name"`
+	Origin                      string                        `json:"origin"`
+	Os                          OperatingSystem               `json:"os"`
+	PlacementPolicy             VmPlacementPolicy             `json:"placement_policy"`
+	RngDevice                   RngDevice                     `json:"rng_device"`
+	SerialNumber                SerialNumber                  `json:"serial_number"`
+	SmallIcon                   Icon                          `json:"small_icon"`
+	SoundcardEnabled            bool                          `json:"soundcard_enabled"`
+	Sso                         Sso                           `json:"sso"`
+	StartPaused                 bool                          `json:"start_paused"`
+	Stateless                   bool                          `json:"stateless"`
+	Status                      TemplateStatus                `json:"status"`
+	StorageErrorResumeBehaviour VmStorageErrorResumeBehaviour `json:"storage_error_resume_behaviour"`
+	TimeZone                    TimeZone                      `json:"time_zone"`
+	TunnelMigration             bool                          `json:"tunnel_migration"`
+	Type                        VmType                        `json:"type"`
+	Usb                         Usb                           `json:"usb"`
+	Version                     TemplateVersion               `json:"version"`
+	VirtioScsi                  VirtioScsi                    `json:"virtio_scsi"`
+	Vm                          Vm                            `json:"vm"`
+}
+
+// type Io from section 7.129 of the Redhat api guide
+type Io struct {
+	Threads int `json:"threads"`
+}
+
+// type Ip from section 7.130 of the Redhat api guide
+type Ip struct {
+	Address string    `json:"address"`
+	Gateway string    `json:"gateway"`
+	Netmask string    `json:"netmask"`
+	Version IpVersion `json:"version"`
+}
+
+// type IpAddressAssignment from section 7.131 of the Redhat api guide
+type IpAddressAssignment struct {
+	AssignmentMethod BootProtocol `json:"assignment_method"`
+	Ip               Ip           `json:"ip"`
+}
+
+// type IpVersion from section 7.132 of the Redhat api guide
+type IpVersion struct {
+	V4 string `json:"v4"`
+	V6 string `json:"v6"`
+}
+
+// type IscsiBond from section 7.133 of the Redhat api guide
+type IscsiBond struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type IscsiDetails from section 7.134 of the Redhat api guide
+type IscsiDetails struct {
+	Address         string `json:"address"`
+	DiskId          string `json:"disk_id"`
+	Initiator       string `json:"initiator"`
+	LunMapping      int    `json:"lun_mapping"`
+	Password        string `json:"password"`
+	Paths           int    `json:"paths"`
+	Port            int    `json:"port"`
+	Portal          string `json:"portal"`
+	ProductId       string `json:"product_id"`
+	Serial          string `json:"serial"`
+	Size            int    `json:"size"`
+	Status          string `json:"status"`
+	StorageDomainId string `json:"storage_domain_id"`
+	Target          string `json:"target"`
+	Username        string `json:"username"`
+	VendorId        string `json:"vendor_id"`
+	VolumeGroupId   string `json:"volume_group_id"`
+}
+
+// type Job from section 7.135 of the Redhat api guide
+type Job struct {
+	AutoCleared bool      `json:"auto_cleared"`
+	Comment     string    `json:"comment"`
+	Description string    `json:"description"`
+	EndTime     Date      `json:"end_time"`
+	External    bool      `json:"external"`
+	Id          string    `json:"id"`
+	LastUpdated Date      `json:"last_updated"`
+	Name        string    `json:"name"`
+	StartTime   Date      `json:"start_time"`
+	Status      JobStatus `json:"status"`
+}
+
+// type JobStatus from section 7.136 of the Redhat api guide
+type JobStatus struct {
+	Aborted  string `json:"aborted"`
+	Failed   string `json:"failed"`
+	Finished string `json:"finished"`
+	Started  string `json:"started"`
+	Unknown  string `json:"unknown"`
+}
+
+// type KatelloErratum from section 7.137 of the Redhat api guide
+type KatelloErratum struct {
+	Comment     string    `json:"comment"`
+	Description string    `json:"description"`
+	Id          string    `json:"id"`
+	Issued      Date      `json:"issued"`
+	Name        string    `json:"name"`
+	Packages    []Package `json:"packages"`
+	Severity    string    `json:"severity"`
+	Solution    string    `json:"solution"`
+	Summary     string    `json:"summary"`
+	Title       string    `json:"title"`
+	Type        string    `json:"type"`
+}
+
+// type KdumpStatus from section 7.138 of the Redhat api guide
+type KdumpStatus struct {
+	Disabled string `json:"disabled"`
+	Enabled  string `json:"enabled"`
+	Unknown  string `json:"unknown"`
+}
+
+// type Kernel from section 7.139 of the Redhat api guide
+type Kernel struct {
+	Version Version `json:"version"`
+}
+
+// type Ksm from section 7.140 of the Redhat api guide
+type Ksm struct {
+	Enabled          bool `json:"enabled"`
+	MergeAcrossNodes bool `json:"merge_across_nodes"`
+}
+
+// type LinkLayerDiscoveryProtocolElement from section 7.141 of the Redhat api guide
+type LinkLayerDiscoveryProtocolElement struct {
+	Comment     string     `json:"comment"`
+	Description string     `json:"description"`
+	Id          string     `json:"id"`
+	Name        string     `json:"name"`
+	Oui         int        `json:"oui"`
+	Properties  []Property `json:"properties"`
+	Subtype     int        `json:"subtype"`
+	Type        int        `json:"type"`
+}
+
+// type LogSeverity from section 7.142 of the Redhat api guide
+type LogSeverity struct {
+	Alert   string `json:"alert"`
+	Error   string `json:"error"`
+	Normal  string `json:"normal"`
+	Warning string `json:"warning"`
+}
+
+// type LogicalUnit from section 7.143 of the Redhat api guide
+type LogicalUnit struct {
+	Address           string    `json:"address"`
+	DiscardMaxSize    int       `json:"discard_max_size"`
+	DiscardZeroesData bool      `json:"discard_zeroes_data"`
+	DiskId            string    `json:"disk_id"`
+	Id                string    `json:"id"`
+	LunMapping        int       `json:"lun_mapping"`
+	Password          string    `json:"password"`
+	Paths             int       `json:"paths"`
+	Port              int       `json:"port"`
+	Portal            string    `json:"portal"`
+	ProductId         string    `json:"product_id"`
+	Serial            string    `json:"serial"`
+	Size              int       `json:"size"`
+	Status            LunStatus `json:"status"`
+	StorageDomainId   string    `json:"storage_domain_id"`
+	Target            string    `json:"target"`
+	Username          string    `json:"username"`
+	VendorId          string    `json:"vendor_id"`
+	VolumeGroupId     string    `json:"volume_group_id"`
+}
+
+// type LunStatus from section 7.144 of the Redhat api guide
+type LunStatus struct {
+	Free     string `json:"free"`
+	Unusable string `json:"unusable"`
+	Used     string `json:"used"`
+}
+
+// type Mac from section 7.145 of the Redhat api guide
+type Mac struct {
+	Address string `json:"address"`
+}
+
+// type MacPool from section 7.146 of the Redhat api guide
+type MacPool struct {
+	AllowDuplicates bool    `json:"allow_duplicates"`
+	Comment         string  `json:"comment"`
+	DefaultPool     bool    `json:"default_pool"`
+	Description     string  `json:"description"`
+	Id              string  `json:"id"`
+	Name            string  `json:"name"`
+	Ranges          []Range `json:"ranges"`
+}
+
+// type MemoryOverCommit from section 7.147 of the Redhat api guide
+type MemoryOverCommit struct {
+	Percent int `json:"percent"`
+}
+
+// type MemoryPolicy from section 7.148 of the Redhat api guide
+type MemoryPolicy struct {
+	Ballooning           bool                 `json:"ballooning"`
+	Guaranteed           int                  `json:"guaranteed"`
+	Max                  int                  `json:"max"`
+	OverCommit           MemoryOverCommit     `json:"over_commit"`
+	TransparentHugePages TransparentHugePages `json:"transparent_huge_pages"`
+}
+
+// type MessageBrokerType from section 7.149 of the Redhat api guide
+type MessageBrokerType struct {
+	Qpid     string `json:"qpid"`
+	RabbitMq string `json:"rabbit_mq"`
+}
+
+// type Method from section 7.150 of the Redhat api guide
+type Method struct {
+	Id SsoMethod `json:"id"`
+}
+
+// type MigrateOnError from section 7.151 of the Redhat api guide
+type MigrateOnError struct {
+	DoNotMigrate           string `json:"do_not_migrate"`
+	Migrate                string `json:"migrate"`
+	MigrateHighlyAvailable string `json:"migrate_highly_available"`
+}
+
+// type MigrationBandwidth from section 7.152 of the Redhat api guide
+type MigrationBandwidth struct {
+	AssignmentMethod MigrationBandwidthAssignmentMethod `json:"assignment_method"`
+	CustomValue      int                                `json:"custom_value"`
+}
+
+// type MigrationBandwidthAssignmentMethod from section 7.153 of the Redhat api guide
+type MigrationBandwidthAssignmentMethod struct {
+	Auto              string `json:"auto"`
+	Custom            string `json:"custom"`
+	HypervisorDefault string `json:"hypervisor_default"`
+}
+
+// type MigrationOptions from section 7.154 of the Redhat api guide
+type MigrationOptions struct {
+	AutoConverge InheritableBoolean `json:"auto_converge"`
+	Bandwidth    MigrationBandwidth `json:"bandwidth"`
+	Compressed   InheritableBoolean `json:"compressed"`
+}
+
+// type MigrationPolicy from section 7.155 of the Redhat api guide
+type MigrationPolicy struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type Network from section 7.156 of the Redhat api guide
+type Network struct {
+	Comment                  string                   `json:"comment"`
+	Description              string                   `json:"description"`
+	Display                  bool                     `json:"display"`
+	DnsResolverConfiguration DnsResolverConfiguration `json:"dns_resolver_configuration"`
+	Id                       string                   `json:"id"`
+	Ip                       Ip                       `json:"ip"`
+	Mtu                      int                      `json:"mtu"`
+	Name                     string                   `json:"name"`
+	ProfileRequired          bool                     `json:"profile_required"`
+	Required                 bool                     `json:"required"`
+	Status                   NetworkStatus            `json:"status"`
+	Stp                      bool                     `json:"stp"`
+	Usages                   []NetworkUsage           `json:"usages"`
+	Vlan                     Vlan                     `json:"vlan"`
+}
+
+// type NetworkAttachment from section 7.157 of the Redhat api guide
+type NetworkAttachment struct {
+	Comment                  string                   `json:"comment"`
+	Description              string                   `json:"description"`
+	DnsResolverConfiguration DnsResolverConfiguration `json:"dns_resolver_configuration"`
+	Id                       string                   `json:"id"`
+	InSync                   bool                     `json:"in_sync"`
+	IpAddressAssignments     []IpAddressAssignment    `json:"ip_address_assignments"`
+	Name                     string                   `json:"name"`
+	Properties               []Property               `json:"properties"`
+	ReportedConfigurations   []ReportedConfiguration  `json:"reported_configurations"`
+}
+
+// type NetworkConfiguration from section 7.158 of the Redhat api guide
+type NetworkConfiguration struct {
+	Dns  Dns   `json:"dns"`
+	Nics []Nic `json:"nics"`
+}
+
+// type NetworkFilter from section 7.159 of the Redhat api guide
+type NetworkFilter struct {
+	Comment     string  `json:"comment"`
+	Description string  `json:"description"`
+	Id          string  `json:"id"`
+	Name        string  `json:"name"`
+	Version     Version `json:"version"`
+}
+
+// type NetworkFilterParameter from section 7.160 of the Redhat api guide
+type NetworkFilterParameter struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+	Value       string `json:"value"`
+}
+
+// type NetworkLabel from section 7.161 of the Redhat api guide
+type NetworkLabel struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type NetworkPluginType from section 7.162 of the Redhat api guide
+type NetworkPluginType struct {
+	OpenVswitch string `json:"open_vswitch"`
+}
+
+// type NetworkStatus from section 7.163 of the Redhat api guide
+type NetworkStatus struct {
+	NonOperational string `json:"non_operational"`
+	Operational    string `json:"operational"`
+}
+
+// type NetworkUsage from section 7.164 of the Redhat api guide
+type NetworkUsage struct {
+	DefaultRoute string `json:"default_route"`
+	Display      string `json:"display"`
+	Gluster      string `json:"gluster"`
+	Management   string `json:"management"`
+	Migration    string `json:"migration"`
+	Vm           string `json:"vm"`
+}
+
+// type NfsProfileDetail from section 7.165 of the Redhat api guide
+type NfsProfileDetail struct {
+	NfsServerIp    string          `json:"nfs_server_ip"`
+	ProfileDetails []ProfileDetail `json:"profile_details"`
+}
+
+// type NfsVersion from section 7.166 of the Redhat api guide
+type NfsVersion struct {
+	Auto string `json:"auto"`
+	V3   string `json:"v3"`
+	V4   string `json:"v4"`
+	V41  string `json:"v4_1"`
+	V42  string `json:"v4_2"`
+}
+
+// type Nic from section 7.167 of the Redhat api guide
+type Nic struct {
+	BootProtocol BootProtocol `json:"boot_protocol"`
+	Comment      string       `json:"comment"`
+	Description  string       `json:"description"`
+	Id           string       `json:"id"`
+	Interface    NicInterface `json:"interface"`
+	Linked       bool         `json:"linked"`
+	Mac          Mac          `json:"mac"`
+	Name         string       `json:"name"`
+	OnBoot       bool         `json:"on_boot"`
+	Plugged      bool         `json:"plugged"`
+}
+
+// type NicConfiguration from section 7.168 of the Redhat api guide
+type NicConfiguration struct {
+	BootProtocol     BootProtocol `json:"boot_protocol"`
+	Ip               Ip           `json:"ip"`
+	Ipv6             Ip           `json:"ipv6"`
+	Ipv6BootProtocol BootProtocol `json:"ipv6_boot_protocol"`
+	Name             string       `json:"name"`
+	OnBoot           bool         `json:"on_boot"`
+}
+
+// type NicInterface from section 7.169 of the Redhat api guide
+type NicInterface struct {
+	E1000          string `json:"e1000"`
+	PciPassthrough string `json:"pci_passthrough"`
+	Rtl8139        string `json:"rtl8139"`
+	Rtl8139Virtio  string `json:"rtl8139_virtio"`
+	SpaprVlan      string `json:"spapr_vlan"`
+	Virtio         string `json:"virtio"`
+}
+
+// type NicStatus from section 7.170 of the Redhat api guide
+type NicStatus struct {
+	Down string `json:"down"`
+	Up   string `json:"up"`
+}
+
+// type NumaNode from section 7.171 of the Redhat api guide
+type NumaNode struct {
+	Comment      string `json:"comment"`
+	Cpu          Cpu    `json:"cpu"`
+	Description  string `json:"description"`
+	Id           string `json:"id"`
+	Index        int    `json:"index"`
+	Memory       int    `json:"memory"`
+	Name         string `json:"name"`
+	NodeDistance string `json:"node_distance"`
+}
+
+// type NumaNodePin from section 7.172 of the Redhat api guide
+type NumaNodePin struct {
+	HostNumaNode NumaNode `json:"host_numa_node"`
+	Index        int      `json:"index"`
+	Pinned       bool     `json:"pinned"`
+}
+
+// type NumaTuneMode from section 7.173 of the Redhat api guide
+type NumaTuneMode struct {
+	Interleave string `json:"interleave"`
+	Preferred  string `json:"preferred"`
+	Strict     string `json:"strict"`
+}
+
+// type OpenStackImage from section 7.174 of the Redhat api guide
+type OpenStackImage struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type OpenStackImageProvider from section 7.175 of the Redhat api guide
+type OpenStackImageProvider struct {
+	AuthenticationUrl      string     `json:"authentication_url"`
+	Comment                string     `json:"comment"`
+	Description            string     `json:"description"`
+	Id                     string     `json:"id"`
+	Name                   string     `json:"name"`
+	Password               string     `json:"password"`
+	Properties             []Property `json:"properties"`
+	RequiresAuthentication bool       `json:"requires_authentication"`
+	TenantName             string     `json:"tenant_name"`
+	Url                    string     `json:"url"`
+	Username               string     `json:"username"`
+}
+
+// type OpenStackNetwork from section 7.176 of the Redhat api guide
+type OpenStackNetwork struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type OpenStackNetworkProvider from section 7.177 of the Redhat api guide
+type OpenStackNetworkProvider struct {
+	AgentConfiguration     AgentConfiguration           `json:"agent_configuration"`
+	AuthenticationUrl      string                       `json:"authentication_url"`
+	AutoSync               bool                         `json:"auto_sync"`
+	Comment                string                       `json:"comment"`
+	Description            string                       `json:"description"`
+	ExternalPluginType     string                       `json:"external_plugin_type"`
+	Id                     string                       `json:"id"`
+	Name                   string                       `json:"name"`
+	Password               string                       `json:"password"`
+	PluginType             NetworkPluginType            `json:"plugin_type"`
+	Properties             []Property                   `json:"properties"`
+	ReadOnly               bool                         `json:"read_only"`
+	RequiresAuthentication bool                         `json:"requires_authentication"`
+	TenantName             string                       `json:"tenant_name"`
+	Type                   OpenStackNetworkProviderType `json:"type"`
+	Unmanaged              bool                         `json:"unmanaged"`
+	Url                    string                       `json:"url"`
+	Username               string                       `json:"username"`
+}
+
+// type OpenStackNetworkProviderType from section 7.178 of the Redhat api guide
+type OpenStackNetworkProviderType struct {
+	External string `json:"external"`
+	Neutron  string `json:"neutron"`
+}
+
+// type OpenStackProvider from section 7.179 of the Redhat api guide
+type OpenStackProvider struct {
+	AuthenticationUrl      string     `json:"authentication_url"`
+	Comment                string     `json:"comment"`
+	Description            string     `json:"description"`
+	Id                     string     `json:"id"`
+	Name                   string     `json:"name"`
+	Password               string     `json:"password"`
+	Properties             []Property `json:"properties"`
+	RequiresAuthentication bool       `json:"requires_authentication"`
+	TenantName             string     `json:"tenant_name"`
+	Url                    string     `json:"url"`
+	Username               string     `json:"username"`
+}
+
+// type OpenStackSubnet from section 7.180 of the Redhat api guide
+type OpenStackSubnet struct {
+	Cidr        string   `json:"cidr"`
+	Comment     string   `json:"comment"`
+	Description string   `json:"description"`
+	DnsServers  []string `json:"dns_servers"`
+	Gateway     string   `json:"gateway"`
+	Id          string   `json:"id"`
+	IpVersion   string   `json:"ip_version"`
+	Name        string   `json:"name"`
+}
+
+// type OpenStackVolumeProvider from section 7.181 of the Redhat api guide
+type OpenStackVolumeProvider struct {
+	AuthenticationUrl      string     `json:"authentication_url"`
+	Comment                string     `json:"comment"`
+	Description            string     `json:"description"`
+	Id                     string     `json:"id"`
+	Name                   string     `json:"name"`
+	Password               string     `json:"password"`
+	Properties             []Property `json:"properties"`
+	RequiresAuthentication bool       `json:"requires_authentication"`
+	TenantName             string     `json:"tenant_name"`
+	Url                    string     `json:"url"`
+	Username               string     `json:"username"`
+}
+
+// type OpenStackVolumeType from section 7.182 of the Redhat api guide
+type OpenStackVolumeType struct {
+	Comment     string     `json:"comment"`
+	Description string     `json:"description"`
+	Id          string     `json:"id"`
+	Name        string     `json:"name"`
+	Properties  []Property `json:"properties"`
+}
+
+// type OpenstackVolumeAuthenticationKey from section 7.183 of the Redhat api guide
+type OpenstackVolumeAuthenticationKey struct {
+	Comment      string                                    `json:"comment"`
+	CreationDate Date                                      `json:"creation_date"`
+	Description  string                                    `json:"description"`
+	Id           string                                    `json:"id"`
+	Name         string                                    `json:"name"`
+	UsageType    OpenstackVolumeAuthenticationKeyUsageType `json:"usage_type"`
+	Uuid         string                                    `json:"uuid"`
+	Value        string                                    `json:"value"`
+}
+
+// type OpenstackVolumeAuthenticationKeyUsageType from section 7.184 of the Redhat api guide
+type OpenstackVolumeAuthenticationKeyUsageType struct {
+	Ceph string `json:"ceph"`
+}
+
+// type OperatingSystem from section 7.185 of the Redhat api guide
+type OperatingSystem struct {
+	Boot                  Boot    `json:"boot"`
+	Cmdline               string  `json:"cmdline"`
+	CustomKernelCmdline   string  `json:"custom_kernel_cmdline"`
+	Initrd                string  `json:"initrd"`
+	Kernel                string  `json:"kernel"`
+	ReportedKernelCmdline string  `json:"reported_kernel_cmdline"`
+	Type                  string  `json:"type"`
+	Version               Version `json:"version"`
+}
+
+// type OperatingSystemInfo from section 7.186 of the Redhat api guide
+type OperatingSystemInfo struct {
+	Architecture Architecture `json:"architecture"`
+	Comment      string       `json:"comment"`
+	Description  string       `json:"description"`
+	Id           string       `json:"id"`
+	LargeIcon    Icon         `json:"large_icon"`
+	Name         string       `json:"name"`
+	SmallIcon    Icon         `json:"small_icon"`
+}
+
+// type Option from section 7.187 of the Redhat api guide
+type Option struct {
+	Name  string `json:"name"`
+	Type  string `json:"type"`
+	Value string `json:"value"`
+}
+
+// type OsType from section 7.188 of the Redhat api guide
+type OsType struct {
+	Other            string `json:"other"`
+	OtherLinux       string `json:"other_linux"`
+	Rhel3            string `json:"rhel_3"`
+	Rhel3X64         string `json:"rhel_3x64"`
+	Rhel4            string `json:"rhel_4"`
+	Rhel4X64         string `json:"rhel_4x64"`
+	Rhel5            string `json:"rhel_5"`
+	Rhel5X64         string `json:"rhel_5x64"`
+	Rhel6            string `json:"rhel_6"`
+	Rhel6X64         string `json:"rhel_6x64"`
+	Unassigned       string `json:"unassigned"`
+	Windows2003      string `json:"windows_2003"`
+	Windows2003X64   string `json:"windows_2003x64"`
+	Windows2008      string `json:"windows_2008"`
+	Windows2008R2X64 string `json:"windows_2008r2x64"`
+	Windows2008X64   string `json:"windows_2008x64"`
+	Windows2012X64   string `json:"windows_2012x64"`
+	Windows7         string `json:"windows_7"`
+	Windows7X64      string `json:"windows_7x64"`
+	Windows8         string `json:"windows_8"`
+	Windows8X64      string `json:"windows_8x64"`
+	WindowsXp        string `json:"windows_xp"`
+}
+
+// type Package from section 7.189 of the Redhat api guide
+type Package struct {
+	Name string `json:"name"`
+}
+
+// type Payload from section 7.190 of the Redhat api guide
+type Payload struct {
+	Files    []File       `json:"files"`
+	Type     VmDeviceType `json:"type"`
+	VolumeId string       `json:"volume_id"`
+}
+
+// type PayloadEncoding from section 7.191 of the Redhat api guide
+type PayloadEncoding struct {
+	Base64    string `json:"base64"`
+	Plaintext string `json:"plaintext"`
+}
+
+// type Permission from section 7.192 of the Redhat api guide
+type Permission struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type Permit from section 7.193 of the Redhat api guide
+type Permit struct {
+	Administrative bool   `json:"administrative"`
+	Comment        string `json:"comment"`
+	Description    string `json:"description"`
+	Id             string `json:"id"`
+	Name           string `json:"name"`
+}
+
+// type PmProxy from section 7.194 of the Redhat api guide
+type PmProxy struct {
+	Type PmProxyType `json:"type"`
+}
+
+// type PmProxyType from section 7.195 of the Redhat api guide
+type PmProxyType struct {
+	Cluster string `json:"cluster"`
+	Dc      string `json:"dc"`
+	OtherDc string `json:"other_dc"`
+}
+
+// type PolicyUnitType from section 7.196 of the Redhat api guide
+type PolicyUnitType struct {
+	Filter        string `json:"filter"`
+	LoadBalancing string `json:"load_balancing"`
+	Weight        string `json:"weight"`
+}
+
+// type PortMirroring from section 7.197 of the Redhat api guide
+type PortMirroring struct {
+	Address            string                `json:"address"`
+	Agents             []Agent               `json:"agents"`
+	AutomaticPmEnabled bool                  `json:"automatic_pm_enabled"`
+	Enabled            bool                  `json:"enabled"`
+	KdumpDetection     bool                  `json:"kdump_detection"`
+	Options            []Option              `json:"options"`
+	Password           string                `json:"password"`
+	PmProxies          []PmProxy             `json:"pm_proxies"`
+	Status             PowerManagementStatus `json:"status"`
+	Type               string                `json:"type"`
+	Username           string                `json:"username"`
+}
+
+// type PowerManagementStatus from section 7.199 of the Redhat api guide
+type PowerManagementStatus struct {
+	Off     string `json:"off"`
+	On      string `json:"on"`
+	Unknown string `json:"unknown"`
+}
+
+// type Product from section 7.200 of the Redhat api guide
+type Product struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type ProductInfo from section 7.201 of the Redhat api guide
+type ProductInfo struct {
+	Name    string  `json:"name"`
+	Vendor  string  `json:"vendor"`
+	Version Version `json:"version"`
+}
+
+// type ProfileDetail from section 7.202 of the Redhat api guide
+type ProfileDetail struct {
+	BlockStatistics []BlockStatistic `json:"block_statistics"`
+	Duration        int              `json:"duration"`
+	FopStatistics   []FopStatistic   `json:"fop_statistics"`
+	ProfileType     string           `json:"profile_type"`
+	Statistics      []Statistic      `json:"statistics"`
+}
+
+// type Property from section 7.203 of the Redhat api guide
+type Property struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+// type ProxyTicket from section 7.204 of the Redhat api guide
+type ProxyTicket struct {
+	Value string `json:"value"`
+}
+
+// type QcowVersion from section 7.205 of the Redhat api guide
+type QcowVersion struct {
+	Qcow2V2 string `json:"qcow2_v2"`
+	Qcow2V3 string `json:"qcow2_v3"`
+}
+
+// type Qos from section 7.206 of the Redhat api guide
+type Qos struct {
+	Comment                   string  `json:"comment"`
+	CpuLimit                  int     `json:"cpu_limit"`
+	Description               string  `json:"description"`
+	Id                        string  `json:"id"`
+	InboundAverage            int     `json:"inbound_average"`
+	InboundBurst              int     `json:"inbound_burst"`
+	InboundPeak               int     `json:"inbound_peak"`
+	MaxIops                   int     `json:"max_iops"`
+	MaxReadIops               int     `json:"max_read_iops"`
+	MaxReadThroughput         int     `json:"max_read_throughput"`
+	MaxThroughput             int     `json:"max_throughput"`
+	MaxWriteIops              int     `json:"max_write_iops"`
+	MaxWriteThroughput        int     `json:"max_write_throughput"`
+	Name                      string  `json:"name"`
+	OutboundAverage           int     `json:"outbound_average"`
+	OutboundAverageLinkshare  int     `json:"outbound_average_linkshare"`
+	OutboundAverageRealtime   int     `json:"outbound_average_realtime"`
+	OutboundAverageUpperlimit int     `json:"outbound_average_upperlimit"`
+	OutboundBurst             int     `json:"outbound_burst"`
+	OutboundPeak              int     `json:"outbound_peak"`
+	Type                      QosType `json:"type"`
+}
+
+// type QosType from section 7.207 of the Redhat api guide
+type QosType struct {
+	Cpu         string `json:"cpu"`
+	Hostnetwork string `json:"hostnetwork"`
+	Network     string `json:"network"`
+	Storage     string `json:"storage"`
+}
+
+// type Quota from section 7.208 of the Redhat api guide
+type Quota struct {
+	ClusterHardLimitPct int        `json:"cluster_hard_limit_pct"`
+	ClusterSoftLimitPct int        `json:"cluster_soft_limit_pct"`
+	Comment             string     `json:"comment"`
+	DataCenter          DataCenter `json:"data_center"`
+	Description         string     `json:"description"`
+	Disks               []Disk     `json:"disks"`
+	Id                  string     `json:"id"`
+	Name                string     `json:"name"`
+	StorageHardLimitPct int        `json:"storage_hard_limit_pct"`
+	StorageSoftLimitPct int        `json:"storage_soft_limit_pct"`
+	Users               []User     `json:"users"`
+	Vms                 []Vm       `json:"vms"`
+}
+
+// type QuotaClusterLimit from section 7.209 of the Redhat api guide
+type QuotaClusterLimit struct {
+	Comment     string  `json:"comment"`
+	Description string  `json:"description"`
+	Id          string  `json:"id"`
+	MemoryLimit Decimal `json:"memory_limit"`
+	MemoryUsage Decimal `json:"memory_usage"`
+	Name        string  `json:"name"`
+	VcpuLimit   int     `json:"vcpu_limit"`
+	VcpuUsage   int     `json:"vcpu_usage"`
+}
+
+// type QuotaModeType from section 7.210 of the Redhat api guide
+type QuotaModeType struct {
+	Audit    string `json:"audit"`
+	Disabled string `json:"disabled"`
+	Enabled  string `json:"enabled"`
+}
+
+// type QuotaStorageLimit from section 7.211 of the Redhat api guide
+type QuotaStorageLimit struct {
+	Comment     string  `json:"comment"`
+	Description string  `json:"description"`
+	Id          string  `json:"id"`
+	Limit       int     `json:"limit"`
+	Name        string  `json:"name"`
+	Usage       Decimal `json:"usage"`
+}
+
+// type Range from section 7.212 of the Redhat api guide
+type Range struct {
+	From string `json:"from"`
+	To   string `json:"to"`
+}
+
+// type Rate from section 7.213 of the Redhat api guide
+type Rate struct {
+	Bytes  int `json:"bytes"`
+	Period int `json:"period"`
+}
+
+// type RegistrationAffinityGroupMapping from section 7.214 of the Redhat api guide
+type RegistrationAffinityGroupMapping struct {
+	From AffinityGroup `json:"from"`
+	To   AffinityGroup `json:"to"`
+}
+
+// type RegistrationAffinityLabelMapping from section 7.215 of the Redhat api guide
+type RegistrationAffinityLabelMapping struct {
+	From AffinityLabel `json:"from"`
+	To   AffinityLabel `json:"to"`
+}
+
+// type RegistrationClusterMapping from section 7.216 of the Redhat api guide
+type RegistrationClusterMapping struct {
+	From Cluster `json:"from"`
+	To   Cluster `json:"to"`
+}
+
+// type RegistrationConfiguration from section 7.217 of the Redhat api guide
+type RegistrationConfiguration struct {
+	AffinityGroupMappings []RegistrationAffinityGroupMapping `json:"affinity_group_mappings"`
+	AffinityLabelMappings []RegistrationAffinityLabelMapping `json:"affinity_label_mappings"`
+	ClusterMappings       []RegistrationClusterMapping       `json:"cluster_mappings"`
+	DomainMappings        []RegistrationDomainMapping        `json:"domain_mappings"`
+	LunMappings           []RegistrationLunMapping           `json:"lun_mappings"`
+	RoleMappings          []RegistrationRoleMapping          `json:"role_mappings"`
+	VnicProfileMappings   []RegistrationVnicProfileMapping   `json:"vnic_profile_mappings"`
+}
+
+// type RegistrationDomainMapping from section 7.218 of the Redhat api guide
+type RegistrationDomainMapping struct {
+	From Domain `json:"from"`
+	To   Domain `json:"to"`
+}
+
+// type RegistrationLunMapping from section 7.219 of the Redhat api guide
+type RegistrationLunMapping struct {
+	From Disk `json:"from"`
+	To   Disk `json:"to"`
+}
+
+// type RegistrationRoleMapping from section 7.220 of the Redhat api guide
+type RegistrationRoleMapping struct {
+	From Role `json:"from"`
+	To   Role `json:"to"`
+}
+
+// type RegistrationVnicProfileMapping from section 7.221 of the Redhat api guide
+type RegistrationVnicProfileMapping struct {
+	Red  RegistrationConfiguration `json:"red"`
+	From VnicProfile               `json:"from"`
+	To   VnicProfile               `json:"to"`
+}
+
+// type ReportedConfiguration from section 7.222 of the Redhat api guide
+type ReportedConfiguration struct {
+	ActualValue   string `json:"actual_value"`
+	ExpectedValue string `json:"expected_value"`
+	InSync        bool   `json:"in_sync"`
+	Name          string `json:"name"`
+}
+
+// type ReportedDevice from section 7.223 of the Redhat api guide
+type ReportedDevice struct {
+	Comment     string             `json:"comment"`
+	Description string             `json:"description"`
+	Id          string             `json:"id"`
+	Ips         []Ip               `json:"ips"`
+	Mac         Mac                `json:"mac"`
+	Name        string             `json:"name"`
+	Type        ReportedDeviceType `json:"type"`
+}
+
+// type ReportedDeviceType from section 7.224 of the Redhat api guide
+type ReportedDeviceType struct {
+	Network string `json:"network"`
+}
+
+// type ResolutionType from section 7.225 of the Redhat api guide
+type ResolutionType struct {
+	Add  string `json:"add"`
+	Copy string `json:"copy"`
+}
+
+// type RngDevice from section 7.226 of the Redhat api guide
+type RngDevice struct {
+	Rate   Rate      `json:"rate"`
+	Source RngSource `json:"source"`
+}
+
+// type RngSource from section 7.227 of the Redhat api guide
+type RngSource struct {
+	Hwrng   string `json:"hwrng"`
+	Random  string `json:"random"`
+	Urandom string `json:"urandom"`
+}
+
+// type Role from section 7.228 of the Redhat api guide
+type Role struct {
+	Administrative bool   `json:"administrative"`
+	Comment        string `json:"comment"`
+	Description    string `json:"description"`
+	Id             string `json:"id"`
+	Mutable        bool   `json:"mutable"`
+	Name           string `json:"name"`
+}
+
+// type RoleType from section 7.229 of the Redhat api guide
+type RoleType struct {
+	Admin string `json:"admin"`
+	User  string `json:"user"`
+}
+
+// type SchedulingPolicy from section 7.230 of the Redhat api guide
+type SchedulingPolicy struct {
+	Comment       string     `json:"comment"`
+	DefaultPolicy bool       `json:"default_policy"`
+	Description   string     `json:"description"`
+	Id            string     `json:"id"`
+	Locked        bool       `json:"locked"`
+	Name          string     `json:"name"`
+	Properties    []Property `json:"properties"`
+}
+
+// type SchedulingPolicyUnit from section 7.231 of the Redhat api guide
+type SchedulingPolicyUnit struct {
+	Comment     string         `json:"comment"`
+	Description string         `json:"description"`
+	Enabled     bool           `json:"enabled"`
+	Id          string         `json:"id"`
+	Internal    bool           `json:"internal"`
+	Name        string         `json:"name"`
+	Properties  []Property     `json:"properties"`
+	Type        PolicyUnitType `json:"type"`
+}
+
+// type ScsiGenericIO from section 7.232 of the Redhat api guide
+type ScsiGenericIO struct {
+	Filtered   string `json:"filtered"`
+	Unfiltered string `json:"unfiltered"`
+}
+
+// type SeLinux from section 7.233 of the Redhat api guide
+type SeLinux struct {
+	Mode SeLinuxMode `json:"mode"`
+}
+
+// type SeLinuxMode from section 7.234 of the Redhat api guide
+type SeLinuxMode struct {
+	Disabled   string `json:"disabled"`
+	Enforcing  string `json:"enforcing"`
+	Permissive string `json:"permissive"`
+}
+
+// type SerialNumber from section 7.235 of the Redhat api guide
+type SerialNumber struct {
+	Policy SerialNumberPolicy `json:"policy"`
+	Value  string             `json:"value"`
+}
+
+// type SerialNumberPolicy from section 7.236 of the Redhat api guide
+type SerialNumberPolicy struct {
+	Custom string `json:"custom"`
+	Host   string `json:"host"`
+	Vm     string `json:"vm"`
+}
+
+// type Session from section 7.237 of the Redhat api guide
+type Session struct {
+	Comment     string `json:"comment"`
+	ConsoleUser bool   `json:"console_user"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Ip          Ip     `json:"ip"`
+	Name        string `json:"name"`
+	Protocol    string `json:"protocol"`
+}
+
+// type SkipIfConnectivityBroken from section 7.238 of the Redhat api guide
+type SkipIfConnectivityBroken struct {
+	Enabled   bool `json:"enabled"`
+	Threshold int  `json:"threshold"`
+}
+
+// type SkipIfSdActive from section 7.239 of the Redhat api guide
+type SkipIfSdActive struct {
+	Enabled bool `json:"enabled"`
+}
+
+// type Snapshot from section 7.240 of the Redhat api guide
+type Snapshot struct {
+	Bios                        Bios                          `json:"bios"`
+	Comment                     string                        `json:"comment"`
+	Console                     Console                       `json:"console"`
+	Cpu                         Cpu                           `json:"cpu"`
+	CpuShares                   int                           `json:"cpu_shares"`
+	CreationTime                Date                          `json:"creation_time"`
+	CustomCompatibilityVersion  Version                       `json:"custom_compatibility_version"`
+	CustomCpuModel              string                        `json:"custom_cpu_model"`
+	CustomEmulatedMachine       string                        `json:"custom_emulated_machine"`
+	CustomProperties            []CustomProperty              `json:"custom_properties"`
+	Date                        Date                          `json:"date"`
+	DeleteProtected             bool                          `json:"delete_protected"`
+	Description                 string                        `json:"description"`
+	Display                     Display                       `json:"display"`
+	Domain                      Domain                        `json:"domain"`
+	Fqdn                        string                        `json:"fqdn"`
+	GuestOperatingSystem        GuestOperatingSystem          `json:"guest_operating_system"`
+	GuestTimeZone               TimeZone                      `json:"guest_time_zone"`
+	HasIllegalImages            bool                          `json:"has_illegal_images"`
+	HighAvailability            HighAvailability              `json:"high_availability"`
+	Id                          string                        `json:"id"`
+	Initialization              Initialization                `json:"initialization"`
+	Io                          Io                            `json:"io"`
+	LargeIcon                   Icon                          `json:"large_icon"`
+	Lease                       StorageDomainLease            `json:"lease"`
+	Memory                      int                           `json:"memory"`
+	MemoryPolicy                MemoryPolicy                  `json:"memory_policy"`
+	Migration                   MigrationOptions              `json:"migration"`
+	MigrationDowntime           int                           `json:"migration_downtime"`
+	MultiQueuesEnabled          bool                          `json:"multi_queues_enabled"`
+	Name                        string                        `json:"name"`
+	NextRunConfigurationExists  bool                          `json:"next_run_configuration_exists"`
+	NumaTuneMode                NumaTuneMode                  `json:"numa_tune_mode"`
+	Origin                      string                        `json:"origin"`
+	Os                          OperatingSystem               `json:"os"`
+	Payloads                    []Payload                     `json:"payloads"`
+	PersistMemorystate          bool                          `json:"persist_memorystate"`
+	PlacementPolicy             VmPlacementPolicy             `json:"placement_policy"`
+	RngDevice                   RngDevice                     `json:"rng_device"`
+	RunOnce                     bool                          `json:"run_once"`
+	SerialNumber                SerialNumber                  `json:"serial_number"`
+	SmallIcon                   Icon                          `json:"small_icon"`
+	SnapshotStatus              SnapshotStatus                `json:"snapshot_status"`
+	SnapshotType                SnapshotType                  `json:"snapshot_type"`
+	SoundcardEnabled            bool                          `json:"soundcard_enabled"`
+	Sso                         Sso                           `json:"sso"`
+	StartPaused                 bool                          `json:"start_paused"`
+	StartTime                   Date                          `json:"start_time"`
+	Stateless                   bool                          `json:"stateless"`
+	Status                      VmStatus                      `json:"status"`
+	StatusDetail                string                        `json:"status_detail"`
+	StopReason                  string                        `json:"stop_reason"`
+	StopTime                    Date                          `json:"stop_time"`
+	StorageErrorResumeBehaviour VmStorageErrorResumeBehaviour `json:"storage_error_resume_behaviour"`
+	TimeZone                    TimeZone                      `json:"time_zone"`
+	TunnelMigration             bool                          `json:"tunnel_migration"`
+	Type                        VmType                        `json:"type"`
+	Usb                         Usb                           `json:"usb"`
+	UseLatestTemplateVersion    bool                          `json:"use_latest_template_version"`
+	VirtioScsi                  VirtioScsi                    `json:"virtio_scsi"`
+}
+
+// type SnapshotStatus from section 7.241 of the Redhat api guide
+type SnapshotStatus struct {
+	InPreview string `json:"in_preview"`
+	Locked    string `json:"locked"`
+	Ok        string `json:"ok"`
+}
+
+// type SnapshotType from section 7.242 of the Redhat api guide
+type SnapshotType struct {
+	Active    string `json:"active"`
+	Preview   string `json:"preview"`
+	Regular   string `json:"regular"`
+	Stateless string `json:"stateless"`
+}
+
+// type SpecialObjects from section 7.243 of the Redhat api guide
+type SpecialObjects struct {
+	BlankTemplate Template `json:"blank_template"`
+	RootTag       Tag      `json:"root_tag"`
+}
+
+// type Spm from section 7.244 of the Redhat api guide
+type Spm struct {
+	Priority int       `json:"priority"`
+	Status   SpmStatus `json:"status"`
+}
+
+// type SpmStatus from section 7.245 of the Redhat api guide
+type SpmStatus struct {
+	Contending string `json:"contending"`
+	None       string `json:"none"`
+	Spm        string `json:"spm"`
+}
+
+// type Ssh from section 7.246 of the Redhat api guide
+type Ssh struct {
+	AuthenticationMethod SshAuthenticationMethod `json:"authentication_method"`
+	Comment              string                  `json:"comment"`
+	Description          string                  `json:"description"`
+	Fingerprint          string                  `json:"fingerprint"`
+	Id                   string                  `json:"id"`
+	Name                 string                  `json:"name"`
+	Port                 int                     `json:"port"`
+	User                 User                    `json:"user"`
+}
+
+// type SshAuthenticationMethod from section 7.247 of the Redhat api guide
+type SshAuthenticationMethod struct {
+	Password  string `json:"password"`
+	Publickey string `json:"publickey"`
+}
+
+// type SshPublicKey from section 7.248 of the Redhat api guide
+type SshPublicKey struct {
+	Comment     string `json:"comment"`
+	Content     string `json:"content"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type Sso from section 7.249 of the Redhat api guide
+type Sso struct {
+	Methods []Method `json:"methods"`
+}
+
+// type SsoMethod from section 7.250 of the Redhat api guide
+type SsoMethod struct {
+	GuestAgent string `json:"guest_agent"`
+}
+
+// type Statistic from section 7.251 of the Redhat api guide
+type Statistic struct {
+	Comment     string        `json:"comment"`
+	Description string        `json:"description"`
+	Id          string        `json:"id"`
+	Kind        StatisticKind `json:"kind"`
+	Name        string        `json:"name"`
+	Type        ValueType     `json:"type"`
+	Unit        StatisticUnit `json:"unit"`
+	Values      []Value       `json:"values"`
+}
+
+// type StatisticKind from section 7.252 of the Redhat api guide
+type StatisticKind struct {
+	Counter string `json:"counter"`
+	Gauge   string `json:"gauge"`
+}
+
+// type StatisticUnit from section 7.253 of the Redhat api guide
+type StatisticUnit struct {
+	BitsPerSecond  string `json:"bits_per_second"`
+	Bytes          string `json:"bytes"`
+	BytesPerSecond string `json:"bytes_per_second"`
+	CountPerSecond string `json:"count_per_second"`
+	None           string `json:"none"`
+	Percent        string `json:"percent"`
+	Seconds        string `json:"seconds"`
+}
+
+// type Step from section 7.254 of the Redhat api guide
+type Step struct {
+	Comment      string             `json:"comment"`
+	Description  string             `json:"description"`
+	EndTime      Date               `json:"end_time"`
+	External     bool               `json:"external"`
+	ExternalType ExternalSystemType `json:"external_type"`
+	Id           string             `json:"id"`
+	Name         string             `json:"name"`
+	Number       int                `json:"number"`
+	Progress     int                `json:"progress"`
+	StartTime    Date               `json:"start_time"`
+	Status       StepStatus         `json:"status"`
+	Type         StepEnum           `json:"type"`
+}
+
+// type StepEnum from section 7.255 of the Redhat api guide
+type StepEnum struct {
+	Executing         string `json:"executing"`
+	Finalizing        string `json:"finalizing"`
+	RebalancingVolume string `json:"rebalancing_volume"`
+	RemovingBricks    string `json:"removing_bricks"`
+	Unknown           string `json:"unknown"`
+	Validating        string `json:"validating"`
+}
+
+// type StepStatus from section 7.256 of the Redhat api guide
+type StepStatus struct {
+	Aborted  string `json:"aborted"`
+	Failed   string `json:"failed"`
+	Finished string `json:"finished"`
+	Started  string `json:"started"`
+	Unknown  string `json:"unknown"`
+}
+
+// type StorageConnection from section 7.257 of the Redhat api guide
+type StorageConnection struct {
+	Address      string      `json:"address"`
+	Comment      string      `json:"comment"`
+	Description  string      `json:"description"`
+	Id           string      `json:"id"`
+	MountOptions string      `json:"mount_options"`
+	Name         string      `json:"name"`
+	NfsRetrans   int         `json:"nfs_retrans"`
+	NfsTimeo     int         `json:"nfs_timeo"`
+	NfsVersion   NfsVersion  `json:"nfs_version"`
+	Password     string      `json:"password"`
+	Path         string      `json:"path"`
+	Port         int         `json:"port"`
+	Portal       string      `json:"portal"`
+	Target       string      `json:"target"`
+	Type         StorageType `json:"type"`
+	Username     string      `json:"username"`
+	VfsType      string      `json:"vfs_type"`
+}
+
+// type StorageConnectionExtension from section 7.258 of the Redhat api guide
+type StorageConnectionExtension struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+	Password    string `json:"password"`
+	Target      string `json:"target"`
+	Username    string `json:"username"`
+}
+
+// type StorageDomain from section 7.259 of the Redhat api guide
+type StorageDomain struct {
+	Available                  int                 `json:"available"`
+	Backup                     bool                `json:"backup"`
+	Comment                    string              `json:"comment"`
+	Committed                  int                 `json:"committed"`
+	CriticalSpaceActionBlocker int                 `json:"critical_space_action_blocker"`
+	Description                string              `json:"description"`
+	DiscardAfterDelete         bool                `json:"discard_after_delete"`
+	ExternalStatus             ExternalStatus      `json:"external_status"`
+	Id                         string              `json:"id"`
+	Import                     bool                `json:"import"`
+	Master                     bool                `json:"master"`
+	Name                       string              `json:"name"`
+	Status                     StorageDomainStatus `json:"status"`
+	Storage                    HostStorage         `json:"storage"`
+	StorageFormat              StorageFormat       `json:"storage_format"`
+	SupportsDiscard            bool                `json:"supports_discard"`
+	SupportsDiscardZeroesData  bool                `json:"supports_discard_zeroes_data"`
+	Type                       StorageDomainType   `json:"type"`
+	Used                       int                 `json:"used"`
+	WarningLowSpaceIndicator   int                 `json:"warning_low_space_indicator"`
+	WipeAfterDelete            bool                `json:"wipe_after_delete"`
+}
+
+// type StorageDomainLease from section 7.260 of the Redhat api guide
+type StorageDomainLease struct {
+	StorageDomain StorageDomain `json:"storage_domain"`
+}
+
+// type StorageDomainStatus from section 7.261 of the Redhat api guide
+type StorageDomainStatus struct {
+	Activating              string `json:"activating"`
+	Active                  string `json:"active"`
+	Detaching               string `json:"detaching"`
+	Inactive                string `json:"inactive"`
+	Locked                  string `json:"locked"`
+	Maintenance             string `json:"maintenance"`
+	Mixed                   string `json:"mixed"`
+	PreparingForMaintenance string `json:"preparing_for_maintenance"`
+	Unattached              string `json:"unattached"`
+	Unknown                 string `json:"unknown"`
+}
+
+// type StorageDomainType from section 7.262 of the Redhat api guide
+type StorageDomainType struct {
+	Data   string `json:"data"`
+	Export string `json:"export"`
+	Image  string `json:"image"`
+	Iso    string `json:"iso"`
+	Volume string `json:"volume"`
+}
+
+// type StorageFormat from section 7.263 of the Redhat api guide
+type StorageFormat struct {
+	V1 string `json:"v1"`
+	V2 string `json:"v2"`
+	V3 string `json:"v3"`
+	V4 string `json:"v4"`
+}
+
+// type StorageType from section 7.264 of the Redhat api guide
+type StorageType struct {
+	Cinder    string `json:"cinder"`
+	Fcp       string `json:"fcp"`
+	Glance    string `json:"glance"`
+	Glusterfs string `json:"glusterfs"`
+	Iscsi     string `json:"iscsi"`
+	Localfs   string `json:"localfs"`
+	Nfs       string `json:"nfs"`
+	Posixfs   string `json:"posixfs"`
+}
+
+// type SwitchType from section 7.265 of the Redhat api guide
+type SwitchType struct {
+	Legacy string `json:"legacy"`
+	Ovs    string `json:"ovs"`
+}
+
+// type SystemOption from section 7.266 of the Redhat api guide
+type SystemOption struct {
+	Comment     string              `json:"comment"`
+	Description string              `json:"description"`
+	Id          string              `json:"id"`
+	Name        string              `json:"name"`
+	Values      []SystemOptionValue `json:"values"`
+}
+
+// type SystemOptionValue from section 7.267 of the Redhat api guide
+type SystemOptionValue struct {
+	Value   string `json:"value"`
+	Version string `json:"version"`
+}
+
+// type Tag from section 7.268 of the Redhat api guide
+type Tag struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type Template from section 7.269 of the Redhat api guide
+type Template struct {
+	Bios                        Bios                          `json:"bios"`
+	Comment                     string                        `json:"comment"`
+	Console                     Console                       `json:"console"`
+	Cpu                         Cpu                           `json:"cpu"`
+	CpuShares                   int                           `json:"cpu_shares"`
+	CreationTime                Date                          `json:"creation_time"`
+	CustomCompatibilityVersion  Version                       `json:"custom_compatibility_version"`
+	CustomCpuModel              string                        `json:"custom_cpu_model"`
+	CustomEmulatedMachine       string                        `json:"custom_emulated_machine"`
+	CustomProperties            []CustomProperty              `json:"custom_properties"`
+	DeleteProtected             bool                          `json:"delete_protected"`
+	Description                 string                        `json:"description"`
+	Display                     Display                       `json:"display"`
+	Domain                      Domain                        `json:"domain"`
+	HighAvailability            HighAvailability              `json:"high_availability"`
+	Id                          string                        `json:"id"`
+	Initialization              Initialization                `json:"initialization"`
+	Io                          Io                            `json:"io"`
+	LargeIcon                   Icon                          `json:"large_icon"`
+	Lease                       StorageDomainLease            `json:"lease"`
+	Memory                      int                           `json:"memory"`
+	MemoryPolicy                MemoryPolicy                  `json:"memory_policy"`
+	Migration                   MigrationOptions              `json:"migration"`
+	MigrationDowntime           int                           `json:"migration_downtime"`
+	MultiQueuesEnabled          bool                          `json:"multi_queues_enabled"`
+	Name                        string                        `json:"name"`
+	Origin                      string                        `json:"origin"`
+	Os                          OperatingSystem               `json:"os"`
+	PlacementPolicy             VmPlacementPolicy             `json:"placement_policy"`
+	RngDevice                   RngDevice                     `json:"rng_device"`
+	SerialNumber                SerialNumber                  `json:"serial_number"`
+	SmallIcon                   Icon                          `json:"small_icon"`
+	SoundcardEnabled            bool                          `json:"soundcard_enabled"`
+	Sso                         Sso                           `json:"sso"`
+	StartPaused                 bool                          `json:"start_paused"`
+	Stateless                   bool                          `json:"stateless"`
+	Status                      TemplateStatus                `json:"status"`
+	StorageErrorResumeBehaviour VmStorageErrorResumeBehaviour `json:"storage_error_resume_behaviour"`
+	TimeZone                    TimeZone                      `json:"time_zone"`
+	TunnelMigration             bool                          `json:"tunnel_migration"`
+	Type                        VmType                        `json:"type"`
+	Usb                         Usb                           `json:"usb"`
+	Version                     TemplateVersion               `json:"version"`
+	VirtioScsi                  VirtioScsi                    `json:"virtio_scsi"`
+	Vm                          Vm                            `json:"vm"`
+}
+
+// type TemplateStatus from section 7.270 of the Redhat api guide
+type TemplateStatus struct {
+	Illegal string `json:"illegal"`
+	Locked  string `json:"locked"`
+	Ok      string `json:"ok"`
+}
+
+// type TemplateVersion from section 7.271 of the Redhat api guide
+type TemplateVersion struct {
+	VersionName   string `json:"version_name"`
+	VersionNumber int    `json:"version_number"`
+}
+
+// type Ticket from section 7.272 of the Redhat api guide
+type Ticket struct {
+	Expiry int    `json:"expiry"`
+	Value  string `json:"value"`
+}
+
+// type TimeZone from section 7.273 of the Redhat api guide
+type TimeZone struct {
+	Name      string `json:"name"`
+	UtcOffset string `json:"utc_offset"`
+}
+
+// type TransparentHugePages from section 7.274 of the Redhat api guide
+type TransparentHugePages struct {
+	Enabled bool `json:"enabled"`
+}
+
+// type TransportType from section 7.275 of the Redhat api guide
+type TransportType struct {
+	Rdma string `json:"rdma"`
+	Tcp  string `json:"tcp"`
+}
+
+// type UnmanagedNetwork from section 7.276 of the Redhat api guide
+type UnmanagedNetwork struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type Usb from section 7.277 of the Redhat api guide
+type Usb struct {
+	Enabled bool    `json:"enabled"`
+	Type    UsbType `json:"type"`
+}
+
+// type UsbType from section 7.278 of the Redhat api guide
+type UsbType struct {
+	Legacy string `json:"legacy"`
+	Native string `json:"native"`
+}
+
+// type User from section 7.279 of the Redhat api guide
+type User struct {
+	Comment       string `json:"comment"`
+	Department    string `json:"department"`
+	Description   string `json:"description"`
+	DomainEntryId string `json:"domain_entry_id"`
+	Email         string `json:"email"`
+	Id            string `json:"id"`
+	LastName      string `json:"last_name"`
+	LoggedIn      bool   `json:"logged_in"`
+	Name          string `json:"name"`
+	Namespace     string `json:"namespace"`
+	Password      string `json:"password"`
+	Principal     string `json:"principal"`
+	UserName      string `json:"user_name"`
+}
+
+// type Value from section 7.280 of the Redhat api guide
+type Value struct {
+	Datum  Decimal `json:"datum"`
+	Detail string  `json:"detail"`
+}
+
+// type ValueType from section 7.281 of the Redhat api guide
+type ValueType struct {
+	Decimal string `json:"decimal"`
+	Integer string `json:"integer"`
+	String  string `json:"string"`
+}
+
+// type VcpuPin from section 7.282 of the Redhat api guide
+type VcpuPin struct {
+	CpuSet string `json:"cpu_set"`
+	Vcpu   int    `json:"vcpu"`
+}
+
+// type Vendor from section 7.283 of the Redhat api guide
+type Vendor struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
+
+// type Version from section 7.284 of the Redhat api guide
+type Version struct {
+	Build       int    `json:"build"`
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	FullVersion string `json:"full_version"`
+	Id          string `json:"id"`
+	Major       int    `json:"major"`
+	Minor       int    `json:"minor"`
+	Name        string `json:"name"`
+	Revision    int    `json:"revision"`
+}
+
+// type VirtioScsi from section 7.285 of the Redhat api guide
+type VirtioScsi struct {
+	Enabled bool `json:"enabled"`
+}
+
+// type VirtualNumaNode from section 7.286 of the Redhat api guide
+type VirtualNumaNode struct {
+	Comment      string        `json:"comment"`
+	Cpu          Cpu           `json:"cpu"`
+	Description  string        `json:"description"`
+	Id           string        `json:"id"`
+	Index        int           `json:"index"`
+	Memory       int           `json:"memory"`
+	Name         string        `json:"name"`
+	NodeDistance string        `json:"node_distance"`
+	NumaNodePins []NumaNodePin `json:"numa_node_pins"`
+}
+
+// type Vlan from section 7.287 of the Redhat api guide
+type Vlan struct {
+	Id int `json:"id"`
+}
+
+// type Vm from section 7.288 of the Redhat api guide
+type Vm struct {
+	Bios                        Bios                          `json:"bios"`
+	Comment                     string                        `json:"comment"`
+	Console                     Console                       `json:"console"`
+	Cpu                         Cpu                           `json:"cpu"`
+	CpuShares                   int                           `json:"cpu_shares"`
+	CreationTime                Date                          `json:"creation_time"`
+	CustomCompatibilityVersion  Version                       `json:"custom_compatibility_version"`
+	CustomCpuModel              string                        `json:"custom_cpu_model"`
+	CustomEmulatedMachine       string                        `json:"custom_emulated_machine"`
+	CustomProperties            []CustomProperty              `json:"custom_properties"`
+	DeleteProtected             bool                          `json:"delete_protected"`
+	Description                 string                        `json:"description"`
+	Display                     Display                       `json:"display"`
+	Domain                      Domain                        `json:"domain"`
+	Fqdn                        string                        `json:"fqdn"`
+	GuestOperatingSystem        GuestOperatingSystem          `json:"guest_operating_system"`
+	GuestTimeZone               TimeZone                      `json:"guest_time_zone"`
+	HasIllegalImages            bool                          `json:"has_illegal_images"`
+	HighAvailability            HighAvailability              `json:"high_availability"`
+	Id                          string                        `json:"id"`
+	Initialization              Initialization                `json:"initialization"`
+	Io                          Io                            `json:"io"`
+	LargeIcon                   Icon                          `json:"large_icon"`
+	Lease                       StorageDomainLease            `json:"lease"`
+	Memory                      int                           `json:"memory"`
+	MemoryPolicy                MemoryPolicy                  `json:"memory_policy"`
+	Migration                   MigrationOptions              `json:"migration"`
+	MigrationDowntime           int                           `json:"migration_downtime"`
+	MultiQueuesEnabled          bool                          `json:"multi_queues_enabled"`
+	Name                        string                        `json:"name"`
+	NextRunConfigurationExists  bool                          `json:"next_run_configuration_exists"`
+	NumaTuneMode                NumaTuneMode                  `json:"numa_tune_mode"`
+	Origin                      string                        `json:"origin"`
+	Os                          OperatingSystem               `json:"os"`
+	Payloads                    []Payload                     `json:"payloads"`
+	PlacementPolicy             VmPlacementPolicy             `json:"placement_policy"`
+	RngDevice                   RngDevice                     `json:"rng_device"`
+	RunOnce                     bool                          `json:"run_once"`
+	SerialNumber                SerialNumber                  `json:"serial_number"`
+	SmallIcon                   Icon                          `json:"small_icon"`
+	SoundcardEnabled            bool                          `json:"soundcard_enabled"`
+	Sso                         Sso                           `json:"sso"`
+	StartPaused                 bool                          `json:"start_paused"`
+	StartTime                   Date                          `json:"start_time"`
+	Stateless                   bool                          `json:"stateless"`
+	Status                      VmStatus                      `json:"status"`
+	StatusDetail                string                        `json:"status_detail"`
+	StopReason                  string                        `json:"stop_reason"`
+	StopTime                    Date                          `json:"stop_time"`
+	StorageErrorResumeBehaviour VmStorageErrorResumeBehaviour `json:"storage_error_resume_behaviour"`
+	TimeZone                    TimeZone                      `json:"time_zone"`
+	TunnelMigration             bool                          `json:"tunnel_migration"`
+	Type                        VmType                        `json:"type"`
+	Usb                         Usb                           `json:"usb"`
+	UseLatestTemplateVersion    bool                          `json:"use_latest_template_version"`
+	VirtioScsi                  VirtioScsi                    `json:"virtio_scsi"`
+}
+
+// type VmAffinity from section 7.289 of the Redhat api guide
+type VmAffinity struct {
+	Migratable     string `json:"migratable"`
+	Pinned         string `json:"pinned"`
+	UserMigratable string `json:"user_migratable"`
+}
+
+// type VmBase from section 7.290 of the Redhat api guide
+type VmBase struct {
+	Bios                        Bios                          `json:"bios"`
+	Comment                     string                        `json:"comment"`
+	Console                     Console                       `json:"console"`
+	Cpu                         Cpu                           `json:"cpu"`
+	CpuShares                   int                           `json:"cpu_shares"`
+	CreationTime                Date                          `json:"creation_time"`
+	CustomCompatibilityVersion  Version                       `json:"custom_compatibility_version"`
+	CustomCpuModel              string                        `json:"custom_cpu_model"`
+	CustomEmulatedMachine       string                        `json:"custom_emulated_machine"`
+	CustomProperties            []CustomProperty              `json:"custom_properties"`
+	DeleteProtected             bool                          `json:"delete_protected"`
+	Description                 string                        `json:"description"`
+	Display                     Display                       `json:"display"`
+	Domain                      Domain                        `json:"domain"`
+	HighAvailability            HighAvailability              `json:"high_availability"`
+	Id                          string                        `json:"id"`
+	Initialization              Initialization                `json:"initialization"`
+	Io                          Io                            `json:"io"`
+	LargeIcon                   Icon                          `json:"large_icon"`
+	Lease                       StorageDomainLease            `json:"lease"`
+	Memory                      int                           `json:"memory"`
+	MemoryPolicy                MemoryPolicy                  `json:"memory_policy"`
+	Migration                   MigrationOptions              `json:"migration"`
+	MigrationDowntime           int                           `json:"migration_downtime"`
+	MultiQueuesEnabled          bool                          `json:"multi_queues_enabled"`
+	Name                        string                        `json:"name"`
+	Origin                      string                        `json:"origin"`
+	Os                          OperatingSystem               `json:"os"`
+	PlacementPolicy             VmPlacementPolicy             `json:"placement_policy"`
+	RngDevice                   RngDevice                     `json:"rng_device"`
+	SerialNumber                SerialNumber                  `json:"serial_number"`
+	SmallIcon                   Icon                          `json:"small_icon"`
+	SoundcardEnabled            bool                          `json:"soundcard_enabled"`
+	Sso                         Sso                           `json:"sso"`
+	StartPaused                 bool                          `json:"start_paused"`
+	Stateless                   bool                          `json:"stateless"`
+	StorageErrorResumeBehaviour VmStorageErrorResumeBehaviour `json:"storage_error_resume_behaviour"`
+	TimeZone                    TimeZone                      `json:"time_zone"`
+	TunnelMigration             bool                          `json:"tunnel_migration"`
+	Type                        VmType                        `json:"type"`
+	Usb                         Usb                           `json:"usb"`
+	VirtioScsi                  VirtioScsi                    `json:"virtio_scsi"`
+}
+
+// type VmDeviceType from section 7.291 of the Redhat api guide
+type VmDeviceType struct {
+	Cdrom  string `json:"cdrom"`
+	Floppy string `json:"floppy"`
+}
+
+// type VmPlacementPolicy from section 7.292 of the Redhat api guide
+type VmPlacementPolicy struct {
+	Affinity VmAffinity `json:"affinity"`
+}
+
+// type VmPool from section 7.293 of the Redhat api guide
+type VmPool struct {
+	AutoStorageSelect        bool       `json:"auto_storage_select"`
+	Comment                  string     `json:"comment"`
+	Description              string     `json:"description"`
+	Display                  Display    `json:"display"`
+	Id                       string     `json:"id"`
+	MaxUserVms               int        `json:"max_user_vms"`
+	Name                     string     `json:"name"`
+	PrestartedVms            int        `json:"prestarted_vms"`
+	RngDevice                RngDevice  `json:"rng_device"`
+	Size                     int        `json:"size"`
+	SoundcardEnabled         bool       `json:"soundcard_enabled"`
+	Stateful                 bool       `json:"stateful"`
+	Type                     VmPoolType `json:"type"`
+	UseLatestTemplateVersion bool       `json:"use_latest_template_version"`
+}
+
+// type VmPoolType from section 7.294 of the Redhat api guide
+type VmPoolType struct {
+	Automatic string `json:"automatic"`
+	Manual    string `json:"manual"`
+}
+
+// type VmStatus from section 7.295 of the Redhat api guide
+type VmStatus struct {
+	Down             string `json:"down"`
+	ImageLocked      string `json:"image_locked"`
+	Migrating        string `json:"migrating"`
+	NotResponding    string `json:"not_responding"`
+	Paused           string `json:"paused"`
+	PoweringDown     string `json:"powering_down"`
+	PoweringUp       string `json:"powering_up"`
+	RebootInProgress string `json:"reboot_in_progress"`
+	RestoringState   string `json:"restoring_state"`
+	SavingState      string `json:"saving_state"`
+	Suspended        string `json:"suspended"`
+	Unassigned       string `json:"unassigned"`
+	Unknown          string `json:"unknown"`
+	Up               string `json:"up"`
+	WaitForLaunch    string `json:"wait_for_launch"`
+}
+
+// type VmStorageErrorResumeBehaviour from section 7.296 of the Redhat api guide
+type VmStorageErrorResumeBehaviour struct {
+	AutoResume  string `json:"auto_resume"`
+	Kill        string `json:"kill"`
+	LeavePaused string `json:"leave_paused"`
+}
+
+// type VmSummary from section 7.297 of the Redhat api guide
+type VmSummary struct {
+	Active    int `json:"active"`
+	Migrating int `json:"migrating"`
+	Total     int `json:"total"`
+}
+
+// type VmType from section 7.298 of the Redhat api guide
+type VmType struct {
+	Desktop         string `json:"desktop"`
+	HighPerformance string `json:"high_performance"`
+	Server          string `json:"server"`
+}
+
+// type VnicPassThrough from section 7.299 of the Redhat api guide
+type VnicPassThrough struct {
+	Mode VnicPassThroughMode `json:"mode"`
+}
+
+// type VnicPassThroughMode from section 7.300 of the Redhat api guide
+type VnicPassThroughMode struct {
+	Disabled string `json:"disabled"`
+	Enabled  string `json:"enabled"`
+}
+
+// type VnicProfile from section 7.301 of the Redhat api guide
+type VnicProfile struct {
+	Comment          string           `json:"comment"`
+	CustomProperties []CustomProperty `json:"custom_properties"`
+	Description      string           `json:"description"`
+	Id               string           `json:"id"`
+	Migratable       bool             `json:"migratable"`
+	Name             string           `json:"name"`
+	PassThrough      VnicPassThrough  `json:"pass_through"`
+	PortMirroring    bool             `json:"port_mirroring"`
+}
+
+// type VnicProfileMapping from section 7.302 of the Redhat api guide
+type VnicProfileMapping struct {
+	Red                      string `json:"red"`
+	SourceNetworkProfileName string `json:"source_network_profile_name"`
+}
+
+// type VolumeGroup from section 7.303 of the Redhat api guide
+type VolumeGroup struct {
+	Id           string        `json:"id"`
+	LogicalUnits []LogicalUnit `json:"logical_units"`
+	Name         string        `json:"name"`
+}
+
+// type Watchdog from section 7.304 of the Redhat api guide
+type Watchdog struct {
+	Action      WatchdogAction `json:"action"`
+	Comment     string         `json:"comment"`
+	Description string         `json:"description"`
+	Id          string         `json:"id"`
+	Model       WatchdogModel  `json:"model"`
+	Name        string         `json:"name"`
+}
+
+// type WatchdogAction from section 7.305 of the Redhat api guide
+type WatchdogAction struct {
+	Dump     string `json:"dump"`
+	None     string `json:"none"`
+	Pause    string `json:"pause"`
+	Poweroff string `json:"poweroff"`
+	Reset    string `json:"reset"`
+}
+
+// type WatchdogModel from section 7.306 of the Redhat api guide
+type WatchdogModel struct {
+	Diag288  string `json:"diag288"`
+	I6300Esb string `json:"i6300esb"`
+}
+
+// type Weight from section 7.307 of the Redhat api guide
+type Weight struct {
+	Comment     string `json:"comment"`
+	Description string `json:"description"`
+	Factor      int    `json:"factor"`
+	Id          string `json:"id"`
+	Name        string `json:"name"`
+}
