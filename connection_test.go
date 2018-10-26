@@ -1,6 +1,8 @@
 package rhvsdk
 
 import (
+	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -40,21 +42,47 @@ func TestValidateOptions(t *testing.T) {
 	assert.EqualError(t, c.err, "Password cannot be empty")
 }
 
-// func TestFakeAPIResponse(t *testing.T) {
-// 	httpmock.Activate()
-// 	defer httpmock.DeactivateAndReset()
+func TestLoadCACert(t *testing.T) {
+	c, err := NewConnection("server", "username", "password")
+	assert.Nil(t, err)
+	c.loadCACert()
+	assert.EqualError(t, c.err, "caFile is required")
 
-// 	httpmock.RegisterResponder("GET", "https://rhvserver/ovirt-engine/api/",
-// 		httpmock.NewStringResponder(200, `[{"id": 1, "name": "server"}]`))
+	// clear err for next test
+	c.err = nil
 
-// 	resp, err := http.Get("https://rhvserver/ovirt-engine/api/")
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	defer resp.Body.Close()
-// 	body, err := ioutil.ReadAll(resp.Body)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	assert.Equal(t, string(body), `[{"id": 1, "name": "server"}]`)
-// }
+	// write a fake caFile
+	caContent := []byte("123456789")
+	err = ioutil.WriteFile("/tmp/caFile", caContent, 0644)
+	assert.Nil(t, err)
+
+	// test that c.caContent is populated with file contents
+	c.caFile = "/tmp/caFile"
+	c.loadCACert()
+	assert.Equal(t, c.caContents, []byte("123456789"))
+	assert.Nil(t, c.err)
+
+	// remove fake caFile
+	os.Remove("/tmp/caFile")
+
+	// with c.caContent populated, the file should not be read again
+	c.caFile = ""
+	c.loadCACert()
+	assert.Nil(t, c.err)
+}
+
+func TestSetCAFIlePath(t *testing.T) {
+	c, err := NewConnection("server", "username", "password")
+	assert.Nil(t, err)
+	assert.Equal(t, c.caFile, "")
+	c.SetCAFilePath("/tmp/caFile")
+	assert.Equal(t, c.caFile, "/tmp/caFile")
+}
+
+func TestSetCAFileContents(t *testing.T) {
+	c, err := NewConnection("server", "username", "password")
+	assert.Nil(t, err)
+	assert.Nil(t, c.caContents)
+	c.SetCAFileContents([]byte("abcxyz1234"))
+	assert.Equal(t, c.caContents, []byte("abcxyz1234"))
+}
