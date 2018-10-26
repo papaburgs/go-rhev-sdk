@@ -26,11 +26,10 @@ package main
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"regexp"
 	"strings"
-
-	"github.com/Sirupsen/logrus"
 
 	"golang.org/x/net/html"
 	"golang.org/x/net/html/atom"
@@ -276,26 +275,21 @@ func mapTable(z *html.Tokenizer, cols int) ([]attribute, error) {
 		}
 		t, _ = nextToken(z)
 		a.attType = t.Data
-		l.Debug("appending: ", convertAttr(a))
 		atts = append(atts, convertAttr(a))
 	}
 	return atts, err
 }
-
-// global logger - deal with it
-var l = logrus.New()
 
 func main() {
 	var (
 		da  dataAttributes
 		err error
 	)
-	//l.SetLevel(logrus.DebugLevel)
 
 	// hard coded file name = Greatness!
 	typeFile, err := os.Open("types.html")
 	if err != nil {
-		l.Error(err)
+		log.Print(err)
 		return
 	}
 	z := html.NewTokenizer(typeFile)
@@ -308,24 +302,23 @@ func main() {
 		}
 		da.name, da.section, err = findNameInSection(z)
 		if err != nil {
-			l.Error("spot2 ", err)
+			log.Print("spot2 ", err)
 			return
 		}
-		l.Debug("have: ", da.name, " - ", da.section)
 
 		cols := analyzeTable(z)
 		if cols == 0 {
-			l.Error("problems finding table")
+			log.Print("problems finding table")
 		}
 
 		err = findOpenTag(z, atom.Tbody)
 		if err != nil {
-			l.Error("premature ending")
+			log.Print("premature ending")
 			return
 		}
 		da.attrs, err = mapTable(z, cols)
 		if err != nil {
-			l.Error("spot3 ", err)
+			log.Print("spot3 ", err)
 			return
 		}
 		// each loop gives us a section, so just print it out, could
