@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"os"
 	"regexp"
@@ -24,10 +25,10 @@ type attribute struct {
 }
 
 var (
-	ErrEOF = errors.New("EOF")
+	ErrEOF    = errors.New("EOF")
+	ErrFound  = errors.New("Found")
 	ErrNoName = errors.New("Could find name in expected location")
 )
-
 
 func TokenDetail(t html.Token, l *logrus.Logger) {
 	l.Debug("-- logging a token --")
@@ -38,44 +39,45 @@ func TokenDetail(t html.Token, l *logrus.Logger) {
 	l.Debug("token Type: ", t.Type)
 }
 
-func findSectionTag(z *html.Tokenizer) error {
-	for {
-		tt := z.Next()
-		if tt == html.ErrorToken {
-			return ErrEOF
-		}
-		t := z.Token()
-
-		// if not in a section already and we find a starting tag:
-		// we only care about a start section token
-			if t.Type == html.StartTagToken && t.DataAtom == atom.Section {
-					return 
-				
-		}
+func nextToken(z *html.Tokenizer) (html.Token, error) {
+	tt := z.Next()
+	if tt == html.ErrorToken {
+		return html.Token{}, ErrEOF
 	}
+	return z.Token(), nil
 }
 
-	
+// nextNonToken returns next token, unless it is the passed
+// in that case, it returns Found error
+func nextNonToken(z *html.Tokenizer, tag atom.Atom) (html.Token, error) {
+	tt := z.Next()
+	if tt == html.ErrorToken {
+		return html.Token{}, ErrEOF
+	}
+	if z.Token().DataAtom == tag {
+		return html.Token{}, ErrFound
+	}
+	return z.Token(), nil
+}
+
 // return is name, section, error
 func findNameInSection(z *html.Tokenizer) (string, string, error) {
 	for {
-		tt := z.Next()
-		if tt == html.ErrorToken {
-			return "", "", ErrEOF
+		t, err := nextToken(z)
+		if err != nil {
+			return "", "", err
 		}
-		t := z.Token()
-		if t.Type == html.StartTagToken && t.DataAtom == atom.H2 { 
+		if t.Type == html.StartTagToken && t.DataAtom == atom.H2 {
 			// next token is the content we want
-			_ = z.Next()
-			t = z.Token()
-			if t.Type != html.TextToken {
-				return "", "", ErrNoName
+			t, err = nextToken(z)
+			if err != nil {
+				return "", "", err
 			}
 			// the token Data will have content like "6.233 Weight"
 			// want the number is one variable and the rest in another
+			re := regexp.MustCompile(`(\d\.\d+)[\W]+(.*)\s*`)
 			match := re.FindStringSubmatch(t.Data)
 			if len(match) != 3 {
-				l.Error("match failed to find name and section in ", t.Data)
 				return "", "", ErrNoName
 			} else {
 				return match[2], match[1], nil
@@ -84,33 +86,73 @@ func findNameInSection(z *html.Tokenizer) (string, string, error) {
 	}
 }
 
-func findTableBody(z *html.Tokenizer) error {
+func findCloseTag(z *html.Tokenizer, tag atom.Atom) error {
 	for {
-		tt := z.Next()
-		if tt == html.ErrorToken {
-			return ErrEOF
+		t, err := nextToken(z)
+		if err != nil {
+			return err
 		}
-			if t.Type == html.StartTagToken && t.DataAtom == atom.Tbody {
-					return  nil
-				
+		if t.Type == html.EndTagToken && t.DataAtom == tag {
+			return nil
+		}
+	}
+}
+func findOpenTag(z *html.Tokenizer, tag atom.Atom) error {
+	for {
+		t, err := nextToken(z)
+		if err != nil {
+			return err
+		}
+		if t.Type == html.StartTagToken && t.DataAtom == tag {
+			return nil
 		}
 	}
 }
 
+// oh my!! this is gross, someone help me please
+func mapTable(z *html.Tokenizer) ([]attribute, error) {
+	atts := []attribute{}
+	var a attribute
+	for {
+		a = attribute{}
+		err := findOpenTag(z, atom.Tr)
+		if err != nil {
+			return atts, err
+		}
+		err = findOpenTag(z, atom.Td)
+		if err != nil {
+			fmt.Println("map2")
+			return atts, ErrEOF
+		}
+		fmt.Println("looking for text")
+		for {
+			t, err := nextNonToken(z, atom.Td)
+			if err != nil {
+				fmt.Println("map3")
+				if err == ErrFound {
+					fmt.Println("found td")
+					break
+				} else {
+					return atts, err
+				}
+			}
+			TokenDetail(t, l)
+			atts = append(atts, a)
+		}
 
+	}
+	return atts, nil
+}
+
+var l = logrus.New()
 
 func main() {
 	var (
-		inSection bool
-		inTable bool
-		inTableBody bool
-		da                 dataAttributes
-		das                []dataAttributes
+		da  dataAttributes
+		das []dataAttributes
 		err error
 	)
-	re := regexp.MustCompile(`(\d\.\d+)[\W]+(.*)\s*`)
-		// global logger
-	var l = logrus.New()
+	// global logger
 	l.SetLevel(logrus.DebugLevel)
 
 	typeFile, err := os.Open("types.html")
@@ -119,75 +161,38 @@ func main() {
 		return
 	}
 	z := html.NewTokenizer(typeFile)
-	i := 0
 	das = []dataAttributes{}
 
 	// rewrite to make it like a state machine
-	
+
 	for {
-		das = []dataAttributes{}
-		if !findSectionTag(z) {
-			return
-		}
-		das.name, das.section, err = findNameInSection(z) 
+		da = dataAttributes{}
+		err = findOpenTag(z, atom.Section)
 		if err != nil {
-			l.Error(err)
+			break
+		}
+		da.name, da.section, err = findNameInSection(z)
+		if err != nil {
+			l.Error("spot2 ", err)
 			return
 		}
-		if err = findTableBody(z) ; err != nil {
+		fmt.Println("have: ", da.name, " - ", da.section)
+
+		err = findOpenTag(z, atom.Tbody)
+		if err != nil {
 			l.Error("premature ending")
 			return
 		}
-		
-		
-		if inSection {
-			if t.Type == html.StartTagToken {
-				if t.DataAtom == atom.Table {
-					inTable = true
-					da.attrs = []attribute{}
-					continue // skip to next token
-				}
-				if t.DataAtom == atom.H2 { // next token is the content we want
-					_ = z.Next()
-					t = z.Token()
-					if t.Type != html.TextToken {
-						l.Error("Something went wrong, expecting text token")
-						break
-					}
-					// the token Data will have content like "6.233 Weight"
-					// want the number is one variable and the rest in another
-					match := re.FindStringSubmatch(t.Data)
-					if len(match) != 3 {
-						l.Error("match failed to find name and section in ", t.Data)
-					} else {
-						da.name = match[2]
-						da.section = match[1]
-					}
-					continue
-				}
-				// if not in table, move to the next token
-				if !inTable { continue } else {
-				    	
+		da.attrs, err = mapTable(z)
 
-				
-			}
-			if t.Type == html.EndTagToken {
-				// if the token is a section, them mark it we are in a section
-				// we don't need this token anymore
-				if t.DataAtom == atom.Section {
-					inSection = false
-					//append this section to the list
-					das = append(das, da)
-					continue
-				}
-				if t.DataAtom == atom.Table {
-					inTable = false
-					continue
-				}
-			}
+		if err != nil {
+			l.Error("spot3 ", err)
+			return
 		}
+		das = append(das, da)
 	}
-	fmt.Println(das, da)
+	fmt.Println(das)
+
 }
 
 var cpu_table = `<section class="section" id="types-cpu"><div class="titlepage"><div><div><h2 class="title">6.33.&nbsp;Cpu <span class="small small">struct</span></h2></div></div></div><div class="table" id="idm140613544648832"><p class="title"><strong>Table&nbsp;6.42.&nbsp;Attributes summary</strong></p><div class="table-contents"><table class="lt-4-cols lt-7-rows"><colgroup><col style="width: 20%; " class="col_1"><!--Empty--><col style="width: 20%; " class="col_2"><!--Empty--><col style="width: 60%; " class="col_3"><!--Empty--></colgroup><thead><tr><th style="text-align: left; vertical-align: top; ">Name</th><th style="text-align: left; vertical-align: top; ">Type</th><th style="text-align: left; vertical-align: top; ">Summary</th></tr></thead><tbody><tr><td style="text-align: left; vertical-align: top; "> <p>
