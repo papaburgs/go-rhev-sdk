@@ -7,5 +7,7 @@ before_install:
   - go get -v ./...
 
 script:
+  - dep ensure
   - go vet
   - go test -v -cover ./...
+  - go build .
