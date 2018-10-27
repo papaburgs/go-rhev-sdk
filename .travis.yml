@@ -1,13 +1,16 @@
 language: go
 
 go:
+  - "1.10.x"
+  - "1.9.x"
   - master
 
-before_install:
+install:
+  - go get -u github.com/golang/dep/...
+  - dep ensure
   - go get -v ./...
 
 script:
-  - dep ensure
   - go vet
   - go test -v -cover ./...
   - go build .
