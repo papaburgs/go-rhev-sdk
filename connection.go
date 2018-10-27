@@ -95,9 +95,11 @@ func (c *Connection) validateOptions() {
 	}
 	if len(c.username) == 0 {
 		c.err = errors.New("Username cannot be empty")
+		return
 	}
 	if len(c.password) == 0 {
 		c.err = errors.New("Password cannot be empty")
+		return
 	}
 }
 
